@@ -11,7 +11,7 @@ def extract_pdf_metadata(pdf_file):
 
 # Function to display PDF using iframe
 def display_pdf(pdf_file):
-    base64_pdf = base64.b64encode(pdf_file.read()).decode('utf-8')
+    base64_pdf = base64.b64encode(pdf_file.getvalue()).decode('utf-8')
     pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800px" type="application/pdf"></iframe>'
     st.markdown(pdf_display, unsafe_allow_html=True)
 
