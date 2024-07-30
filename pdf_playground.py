@@ -364,3 +364,24 @@ def compress_pdf(pdf: bytes, password: str) -> bytes:
     writer.write(bytes_stream)
     bytes_stream.seek(0)
     return bytes_stream.getvalue()
+
+#---------------------------------------------------------------------------------------------------------------------------------
+### Main app
+#---------------------------------------------------------------------------------------------------------------------------------
+
+session_state["decrypted_filename"] = (None
+if "decrypted_filename" not in session_state
+else session_state["decrypted_filename"])
+session_state["password"] = ("" if "password" not in session_state else session_state["password"])
+session_state["is_encrypted"] = (False if "is_encrypted" not in session_state else session_state["is_encrypted"])
+
+try:
+    (
+        pdf,
+        reader,
+        session_state["password"],
+        session_state["is_encrypted"],
+    ) = load_pdf(key="main")
+
+except FileNotDecryptedError:
+        pdf = "password_required"
