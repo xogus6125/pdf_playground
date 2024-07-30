@@ -86,5 +86,37 @@ data_source = st.radio('Select the main source', ["File Upload", "Load from a UR
 
 if data_source == "File Upload":
 
-    pdf_file = st.file_uploader("**:blue[Choose a PDF file]**",type="pdf",accept_multiple_files=True)
+    uploaded_file = st.file_uploader("**:blue[Choose a PDF file]**",type="pdf",accept_multiple_files=True)
     st.divider()
+
+#---------------------------------------------------------------------------------------------------------------------------------
+### Content
+#---------------------------------------------------------------------------------------------------------------------------------
+
+    tab1, tab2, tab3  = st.tabs(["**Preview**","**Extract**","**Convert**"])
+
+#---------------------------------------------------------------------------------------------------------------------------------
+### Preview
+#---------------------------------------------------------------------------------------------------------------------------------
+
+    with tab1:
+
+        col1, col2 = st.columns((0.7,0.3))
+        with col1:
+
+            st.subheader("View",divider='blue')
+            with st.container(height=750,border=True):
+
+                if uploaded_file is not None:
+
+                    base64_pdf = uploaded_file.getvalue().hex()
+                    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
+                    st.markdown(pdf_display, unsafe_allow_html=True)
+                    
+                    with col2:
+
+                        st.subheader("View",divider='blue')
+                        with st.container(height=750,border=True):
+                
+                            metadata, text = extract_pdf_info(uploaded_file)
+                            st.json(metadata)
