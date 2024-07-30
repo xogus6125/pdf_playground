@@ -15,13 +15,6 @@ import sys
 import traceback
 from io import BytesIO
 #----------------------------------------
-from pdf2docx import Converter
-from pypdf import PaperSize, PdfReader, PdfWriter, Transformation
-from pypdf.errors import FileNotDecryptedError
-from st_social_media_links import SocialMediaIcons
-from streamlit import session_state
-from streamlit_pdf_viewer import pdf_viewer
-#----------------------------------------
 #import utils
 import fitz
 import re
@@ -70,7 +63,7 @@ st.info('**An easy-to-use, open-source PDF application to preview and extract co
 
 @st.cache_data(ttl="2h")
 def extract_pdf_info(pdf_file):
-    document = fitz.open(stream=pdf_file.read(), filetype="pdf")
+    document = fitz.open(stream=pdf_file, filetype="pdf")
     metadata = document.metadata
     text = [document.load_page(page_num).get_text() for page_num in range(len(document))]
     return metadata, text, document
@@ -81,7 +74,6 @@ def pdf_page_to_image(doc, page_num):
     pix = page.get_pixmap()
     img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
     return img
-
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -126,4 +118,3 @@ if data_source == "File Upload":
                 
                             metadata_df = pd.DataFrame(list(metadata.items()), columns=["Key", "Value"])
                             st.table(metadata_df)
-
