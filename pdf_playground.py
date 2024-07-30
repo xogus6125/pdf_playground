@@ -22,7 +22,7 @@ from st_social_media_links import SocialMediaIcons
 from streamlit import session_state
 from streamlit_pdf_viewer import pdf_viewer
 #----------------------------------------
-import utils
+#import utils
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Title and description for your Streamlit app
 #---------------------------------------------------------------------------------------------------------------------------------
