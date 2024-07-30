@@ -9,3 +9,4 @@ pypdf[full]
 st-social-media-links
 streamlit-pdf-viewer
 fitz
+pdf2image
