@@ -10,15 +10,33 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 #----------------------------------------
-
+import os
+import sys
+import traceback
+from io import BytesIO
+#----------------------------------------
+from pdf2docx import Converter
+from pypdf import PaperSize, PdfReader, PdfWriter, Transformation
+from pypdf.errors import FileNotDecryptedError
+from st_social_media_links import SocialMediaIcons
+from streamlit import session_state
+from streamlit_pdf_viewer import pdf_viewer
+#----------------------------------------
+import utils
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Title and description for your Streamlit app
 #---------------------------------------------------------------------------------------------------------------------------------
+VERSION = "0.1.0"
 #import custom_style()
-st.set_page_config(page_title="PDF Playground",
-                   layout="wide",
-                   #page_icon=               
-                   initial_sidebar_state="collapsed")
+st.set_page_config(
+    page_title="PDF Playground",
+    layout="wide",
+    page_icon="📄",
+    menu_items={
+            "About": f"PDF Playground v{VERSION}  "
+            f"\nDeveloper contact: [Avijit Chakraborty](mailto:avijit.mba18@gmail.com)",
+            "Get help": None,},            
+    initial_sidebar_state="auto")
 #----------------------------------------
 st.title(f""":rainbow[PDF Playground | v0.1]""")
 st.markdown(
