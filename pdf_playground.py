@@ -50,4 +50,4 @@ for page_num in page_numbers:
     st.write(f"### Page {page_num + 1}")
     img = pdf_page_to_image(document, page_num)
     st.image(img, caption=f"Page {page_num + 1}", use_column_width=True)
-    st.write(text[page_num
+    st.write(text[page_num])
