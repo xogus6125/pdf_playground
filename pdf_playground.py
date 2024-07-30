@@ -24,9 +24,10 @@ uploaded_file = st.file_uploader("Upload a PDF file", type="pdf")
 
 if uploaded_file is not None:
     # Extract metadata and reset file pointer
-    metadata = extract_pdf_metadata(uploaded_file)
     uploaded_file.seek(0)  # Reset file pointer after reading
-
+    metadata = extract_pdf_metadata(uploaded_file)
+    uploaded_file.seek(0)  # Reset file pointer again for display
+    
     st.write("## PDF Metadata")
     metadata_df = pd.DataFrame(list(metadata.items()), columns=["Key", "Value"])
     st.table(metadata_df)
