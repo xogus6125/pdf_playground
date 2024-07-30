@@ -2,6 +2,9 @@ import streamlit as st
 import fitz  # PyMuPDF
 import pandas as pd
 import base64
+from pdf2image import convert_from_bytes
+from PIL import Image
+import io
 
 # Function to extract metadata from PDF
 def extract_pdf_metadata(pdf_file):
@@ -9,11 +12,15 @@ def extract_pdf_metadata(pdf_file):
     metadata = document.metadata
     return metadata
 
-# Function to display PDF using iframe
-def display_pdf(pdf_file):
-    base64_pdf = base64.b64encode(pdf_file.getvalue()).decode('utf-8')
-    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800px" type="application/pdf"></iframe>'
-    st.markdown(pdf_display, unsafe_allow_html=True)
+# Function to convert PDF to images
+def pdf_to_images(pdf_file):
+    images = convert_from_bytes(pdf_file.getvalue())
+    return images
+
+# Function to display PDF as images
+def display_pdf_images(images):
+    for img in images:
+        st.image(img, use_column_width=True)
 
 # Streamlit app setup
 st.set_page_config(page_title="PDF Uploader and Viewer", layout="wide")
@@ -33,4 +40,5 @@ if uploaded_file is not None:
     st.table(metadata_df)
     
     st.write("## PDF Preview")
-    display_pdf(uploaded_file)
+    images = pdf_to_images(uploaded_file)
+    display_pdf_images(images)
