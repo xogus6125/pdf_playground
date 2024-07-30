@@ -82,7 +82,7 @@ def extract_pdf_info(pdf_file):
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
 
-data_source = st.sidebar.radio("**:blue[Select the main source]**", ["File Upload", "Load from a URL"],)
+data_source = st.radio("**:blue[Select the main source]**", ["File Upload", "Load from a URL"],horizontal=True, label_visibility='collapsed', key='options_dt')
 
 if data_source == "File Upload":
 
