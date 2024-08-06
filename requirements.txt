@@ -11,3 +11,4 @@ streamlit-pdf-viewer
 fitz
 pdf2image
 PyMuPDF
+pypdf2
