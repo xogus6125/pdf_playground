@@ -14,7 +14,7 @@ PyMuPDF
 pypdf2
 python-docx 
 docx2txt
-contextlib
+#contextlib
 #rembg
 streamlit-cropper
 streamlit-image-comparison
