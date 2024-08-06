@@ -12,3 +12,5 @@ fitz
 pdf2image
 PyMuPDF
 pypdf2
+python-docx 
+docx2txt
