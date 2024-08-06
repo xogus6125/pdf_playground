@@ -5,7 +5,7 @@ import numpy as np
 import requests
 import streamlit as st
 from PIL import Image, ImageEnhance, ImageOps
-from rembg import remove
+#from rembg import remove
 from st_social_media_links import SocialMediaIcons
 from streamlit_cropper import st_cropper
 from streamlit_image_comparison import image_comparison
