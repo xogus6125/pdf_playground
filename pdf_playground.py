@@ -1,16 +1,27 @@
 import streamlit as st
 import speech_recognition as sr
 from pydub import AudioSegment
+from pydub.utils import make_chunks
 
 # Function to convert audio to text
 def audio_to_text(audio_file):
     recognizer = sr.Recognizer()
     audio = AudioSegment.from_file(audio_file)
-
-    with sr.AudioFile(audio_file) as source:
-        audio_data = recognizer.record(source)
-        text = recognizer.recognize_google(audio_data)
     
+    # Convert audio to chunks for better processing with SpeechRecognition
+    chunk_length_ms = 60000  # 60 seconds
+    chunks = make_chunks(audio, chunk_length_ms)
+    text = ""
+
+    for i, chunk in enumerate(chunks):
+        with sr.AudioFile(chunk.export(format="wav")) as source:
+            audio_data = recognizer.record(source)
+            try:
+                chunk_text = recognizer.recognize_google(audio_data)
+                text += chunk_text + " "
+            except sr.UnknownValueError:
+                text += "[Unintelligible] "
+
     return text
 
 # Streamlit App
