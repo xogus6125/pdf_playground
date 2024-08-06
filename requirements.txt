@@ -16,7 +16,7 @@ python-docx
 docx2txt
 #contextlib
 #rembg
-streamlit-cropper
-streamlit-image-comparison
+#streamlit-cropper
+#streamlit-image-comparison
 SpeechRecognition 
 pydub
