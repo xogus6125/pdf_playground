@@ -15,7 +15,7 @@ pypdf2
 python-docx 
 docx2txt
 contextlib
-rembg
+#rembg
 streamlit-cropper
 streamlit-image-comparison
 SpeechRecognition 
