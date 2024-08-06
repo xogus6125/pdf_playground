@@ -18,3 +18,5 @@ contextlib
 rembg
 streamlit-cropper
 streamlit-image-comparison
+SpeechRecognition 
+pydub
