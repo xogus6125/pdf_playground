@@ -1,48 +1,72 @@
+#---------------------------------------------------------------------------------------------------------------------------------
+### Authenticator
+#---------------------------------------------------------------------------------------------------------------------------------
 import streamlit as st
-import speech_recognition as sr
-from pydub import AudioSegment
-from pydub.utils import make_chunks
+#---------------------------------------------------------------------------------------------------------------------------------
+### Import Libraries
+#---------------------------------------------------------------------------------------------------------------------------------
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+#----------------------------------------
+import os
+import sys
+import traceback
+from io import BytesIO
+#----------------------------------------
+#import utils
+import fitz
+import re
+import contextlib
+from io import BytesIO
+from pathlib import Path
+from random import random
+from datetime import datetime
+from typing import Callable, Dict, Literal, Optional, Tuple, Union
+#----------------------------------------
+import requests
+from PIL import Image
+from pypdf import PdfReader, PdfWriter, Transformation
+from pypdf.errors import PdfReadError, PdfStreamError
+from streamlit import session_state
+from streamlit.runtime.uploaded_file_manager import UploadedFile
+from streamlit_pdf_viewer import pdf_viewer
+#---------------------------------------------------------------------------------------------------------------------------------
+### Title and description for your Streamlit app
+#---------------------------------------------------------------------------------------------------------------------------------
 
-# Function to convert audio to text
-def audio_to_text(audio_file):
-    recognizer = sr.Recognizer()
-    audio = AudioSegment.from_file(audio_file)
-    
-    # Convert audio to chunks for better processing with SpeechRecognition
-    chunk_length_ms = 60000  # 60 seconds
-    chunks = make_chunks(audio, chunk_length_ms)
-    text = ""
+st.set_page_config(page_title="PDF Playground",
+                    layout="wide",
+                    page_icon="📄",            
+                    initial_sidebar_state="collapsed")
+#----------------------------------------
+st.title(f""":rainbow[PDF Playground | v0.1]""")
+st.markdown(
+    '''
+    Created by | <a href="mailto:avijit.mba18@gmail.com">Avijit Chakraborty</a>' |
+    for best view of the app, please **zoom-out** the browser to **75%**.
+    ''',
+    unsafe_allow_html=True)
+st.info('**An easy-to-use, open-source PDF application to preview and extract content and metadata from PDFs, add or remove passwords, modify, merge, convert and compress PDFs**', icon="ℹ️")
+#----------------------------------------
 
-    for i, chunk in enumerate(chunks):
-        with sr.AudioFile(chunk.export(format="wav")) as source:
-            audio_data = recognizer.record(source)
-            try:
-                chunk_text = recognizer.recognize_google(audio_data)
-                text += chunk_text + " "
-            except sr.UnknownValueError:
-                text += "[Unintelligible] "
+#---------------------------------------------------------------------------------------------------------------------------------
+### Functions & Definitions
+#---------------------------------------------------------------------------------------------------------------------------------
 
-    return text
+tab1, tab2, tab3  = st.tabs(["**Preview**","**Extract**","**Convert**"])
 
-# Streamlit App
-st.set_page_config(page_title="Audio to Text Converter", layout="wide")
-st.title("Audio to Text Converter")
+#---------------------------------------------------------------------------------------------------------------------------------
+### Main app
+#---------------------------------------------------------------------------------------------------------------------------------
 
-# Upload audio file
-uploaded_file = st.file_uploader("Upload an audio file", type=["wav", "mp3", "ogg"])
 
-if uploaded_file is not None:
-    # Save the uploaded file temporarily
-    with open("temp_audio_file", "wb") as f:
-        f.write(uploaded_file.getbuffer())
 
-    st.audio(uploaded_file, format='audio/wav')
+#---------------------------------------------------------------------------------------------------------------------------------
+### Content
+#---------------------------------------------------------------------------------------------------------------------------------
 
-    # Convert audio to text
-    with st.spinner("Converting audio to text..."):
-        try:
-            extracted_text = audio_to_text("temp_audio_file")
-            st.success("Conversion successful!")
-            st.text_area("Extracted Text", extracted_text, height=300)
-        except Exception as e:
-            st.error(f"Error: {e}")
+tab1, tab2, tab3  = st.tabs(["**Preview**","**Extract**","**Convert**"])
+
+#---------------------------------------------------------------------------------------------------------------------------------
