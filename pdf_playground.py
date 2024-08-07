@@ -99,7 +99,7 @@ with tab1:
 
             with st.container(height=700,border=True):
 
-                st.subheader(f"Preview : {uploaded_file.name}",divider='blue')
+                st.subheader("Preview : ",divider='blue')
                 display_pdf(uploaded_file)
                 uploaded_file.seek(0)  
                 metadata, document = extract_pdf_info(uploaded_file)
