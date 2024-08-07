@@ -11,7 +11,7 @@ streamlit-pdf-viewer
 fitz
 pdf2image
 PyMuPDF
-pypdf2
+PyPDF2
 python-docx 
 docx2txt
 #contextlib
