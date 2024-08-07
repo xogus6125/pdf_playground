@@ -84,7 +84,7 @@ def display_pdf(pdf_file):
 
 uploaded_file = st.file_uploader("**Choose PDF files**", type="pdf", accept_multiple_files=True)
 
-tab1, tab2, tab3  = st.tabs(["**Preview**","**Extract**","**Convert**","**Merge**","**Reduce**"])
+tab1, tab2, tab3, tab4, tab5  = st.tabs(["**Preview**","**Extract**","**Convert**","**Merge**","**Reduce**"])
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Content
