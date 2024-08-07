@@ -59,24 +59,16 @@ st.info('**An easy-to-use, open-source PDF application to preview and extract co
 ### Functions & Definitions
 #---------------------------------------------------------------------------------------------------------------------------------
 
-# Function to extract text and metadata from PDF
 def extract_pdf_info(pdf_file):
     document = fitz.open(stream=pdf_file.read(), filetype="pdf")
     metadata = document.metadata
-    return metadata, document
+    text = ""
+    
+    for page_num in range(len(document)):
+        page = document.load_page(page_num)
+        text += page.get_text()
 
-# Function to convert PDF page to image
-def pdf_page_to_image(doc, page_num):
-    page = doc.load_page(page_num)
-    pix = page.get_pixmap()
-    img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
-    return img
-
-# Function to display PDF using iframe
-def display_pdf(pdf_file):
-    base64_pdf = base64.b64encode(pdf_file.read()).decode('utf-8')
-    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="100%" height="800" type="application/pdf"></iframe>'
-    st.markdown(pdf_display, unsafe_allow_html=True)
+    return metadata, text
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Main app
@@ -93,21 +85,21 @@ tab1, tab2, tab3, tab4, tab5  = st.tabs(["**Preview**","**Extract**","**Convert*
 with tab1:
     
     if uploaded_file is not None:
-
-        col1, col2 = st.columns((0.6,0.4))
-        with col1:
-
-            with st.container(height=700,border=True):
-
-                st.subheader("Preview : ",divider='blue')
-                display_pdf(uploaded_file)
-                uploaded_file.seek(0)  
-                metadata, document = extract_pdf_info(uploaded_file)
+        st.write("## PDF Preview")
     
-                st.write("## PDF Metadata")
-                metadata_df = pd.DataFrame(list(metadata.items()), columns=["Key", "Value"])
-                st.table(metadata_df)
+        # Display PDF using an iframe
+        base64_pdf = uploaded_file.getvalue().hex()
+        pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
+        st.markdown(pdf_display, unsafe_allow_html=True)
+
+        # Extract text and metadata
+        metadata, text = extract_pdf_info(uploaded_file)
     
+        st.write("## PDF Metadata")
+        st.json(metadata)
+    
+        st.write("## Extracted Text")
+        st.write(text)
 
 
 
