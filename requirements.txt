@@ -20,3 +20,4 @@ docx2txt
 #streamlit-image-comparison
 SpeechRecognition 
 pydub
+frontend
