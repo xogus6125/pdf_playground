@@ -1,43 +1,82 @@
+#---------------------------------------------------------------------------------------------------------------------------------
+### Authenticator
+#---------------------------------------------------------------------------------------------------------------------------------
 import streamlit as st
-from PyPDF2 import PdfReader, PdfWriter
-import io
+#---------------------------------------------------------------------------------------------------------------------------------
+### Import Libraries
+#---------------------------------------------------------------------------------------------------------------------------------
+from streamlit import session_state
+from streamlit.runtime.uploaded_file_manager import UploadedFile
+from streamlit_pdf_viewer import pdf_viewer
+#----------------------------------------
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+#----------------------------------------
+import os
+import sys
+import traceback
+from io import BytesIO
+#----------------------------------------
+#import utils
+import re
+import base64
+import requests
+import contextlib
+from io import BytesIO
+from pathlib import Path
+from random import random
+from datetime import datetime
+from typing import Callable, Dict, Literal, Optional, Tuple, Union
+from io import BytesIO
+#----------------------------------------
+import fitz
+from PIL import Image
+from pypdf import PdfReader, PdfWriter, Transformation
+from pypdf.errors import PdfReadError, PdfStreamError
 
-def compress_pdf(input_pdf):
-    reader = PdfReader(input_pdf)
-    writer = PdfWriter()
+#---------------------------------------------------------------------------------------------------------------------------------
+### Title and description for your Streamlit app
+#---------------------------------------------------------------------------------------------------------------------------------
 
-    for page in reader.pages:
-        writer.add_page(page)
-    
-    output_pdf = io.BytesIO()
-    writer.write(output_pdf)
-    output_pdf.seek(0)
+st.set_page_config(page_title="PDF Playground",
+                    layout="wide",
+                    page_icon="📄",            
+                    initial_sidebar_state="collapsed")
+#----------------------------------------
+st.title(f""":rainbow[PDF Playground | v0.1]""")
+st.markdown(
+    '''
+    Created by | <a href="mailto:avijit.mba18@gmail.com">Avijit Chakraborty</a>' |
+    for best view of the app, please **zoom-out** the browser to **75%**.
+    ''',
+    unsafe_allow_html=True)
+st.info('**An easy-to-use, open-source PDF application to preview and extract content and metadata from PDFs, add or remove passwords, modify, merge, convert and compress PDFs**', icon="ℹ️")
+#----------------------------------------
 
-    return output_pdf
+#---------------------------------------------------------------------------------------------------------------------------------
+### Functions & Definitions
+#---------------------------------------------------------------------------------------------------------------------------------
 
-st.set_page_config(page_title="PDF Compressor", layout="wide")
-st.title("PDF Compressor")
+# Function to extract text and metadata from PDF
+def extract_pdf_info(pdf_file):
+    document = fitz.open(stream=pdf_file.read(), filetype="pdf")
+    metadata = document.metadata
+    text = [document.load_page(page_num).get_text() for page_num in range(len(document))]
+    return metadata, text, document
 
-# Upload PDF file
-uploaded_file = st.file_uploader("Upload a PDF file to compress", type="pdf")
+# Function to convert PDF page to image
+def pdf_page_to_image(doc, page_num):
+    page = doc.load_page(page_num)
+    pix = page.get_pixmap()
+    img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+    return img
 
-if uploaded_file is not None:
-    # Display original PDF size
-    original_size = len(uploaded_file.getbuffer())
-    st.write(f"Original PDF size: {original_size / 1024:.2f} KB")
+#---------------------------------------------------------------------------------------------------------------------------------
+### Main app
+#---------------------------------------------------------------------------------------------------------------------------------
 
-    # Compress PDF
-    with st.spinner("Compressing PDF..."):
-        compressed_pdf = compress_pdf(uploaded_file)
+uploaded_file = st.file_uploader("Upload a PDF file", type="pdf")
 
-    # Display compressed PDF size
-    compressed_size = len(compressed_pdf.getbuffer())
-    st.write(f"Compressed PDF size: {compressed_size / 1024:.2f} KB")
-
-    # Download button for the compressed PDF
-    st.download_button(
-        label="Download Compressed PDF",
-        data=compressed_pdf,
-        file_name="compressed_pdf.pdf",
-        mime="application/pdf"
-    )
+tab1, tab2, tab3, tab4, tab5  = st.tabs(["**Preview**","**Extract**","**Convert**","**Merge**","**Reduce**"])
