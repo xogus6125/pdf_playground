@@ -209,8 +209,8 @@ with tab4:
                                 st.subheader("**View : Compressed PDF**",divider='blue')    
                                 with st.container(height=600,border=True):
 
-                                    compressed_pdf.seek(0)
-                                    images = pdf_to_images(compressed_pdf)
+                                    #compressed_pdf.seek(0)
+                                    images = pdf_to_images_bytes(compressed_pdf)
                                     for page_num, img in enumerate(images):
                                         st.image(img, caption=f"Page {page_num + 1}", use_column_width=True)
 
