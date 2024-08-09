@@ -1,82 +1,59 @@
-#---------------------------------------------------------------------------------------------------------------------------------
-### Authenticator
-#---------------------------------------------------------------------------------------------------------------------------------
 import streamlit as st
-#---------------------------------------------------------------------------------------------------------------------------------
-### Import Libraries
-#---------------------------------------------------------------------------------------------------------------------------------
-from streamlit import session_state
-from streamlit.runtime.uploaded_file_manager import UploadedFile
-from streamlit_pdf_viewer import pdf_viewer
-#----------------------------------------
-import numpy as np
-import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-#----------------------------------------
-import os
-import sys
-import traceback
-from io import BytesIO
-#----------------------------------------
-#import utils
-import re
-import base64
-import requests
-import contextlib
-from io import BytesIO
-from pathlib import Path
-from random import random
-from datetime import datetime
-from typing import Callable, Dict, Literal, Optional, Tuple, Union
-from io import BytesIO
-#----------------------------------------
-import fitz
-from PIL import Image
-from pypdf import PdfReader, PdfWriter, Transformation
-from pypdf.errors import PdfReadError, PdfStreamError
+from PyPDF2 import PdfReader, PdfWriter
 
-#---------------------------------------------------------------------------------------------------------------------------------
-### Title and description for your Streamlit app
-#---------------------------------------------------------------------------------------------------------------------------------
+# Streamlit app setup
+st.title("PDF Password Protection")
 
-st.set_page_config(page_title="PDF Playground",
-                    layout="wide",
-                    page_icon="📄",            
-                    initial_sidebar_state="collapsed")
-#----------------------------------------
-st.title(f""":rainbow[PDF Playground | v0.1]""")
-st.markdown(
-    '''
-    Created by | <a href="mailto:avijit.mba18@gmail.com">Avijit Chakraborty</a>' |
-    for best view of the app, please **zoom-out** the browser to **75%**.
-    ''',
-    unsafe_allow_html=True)
-st.info('**An easy-to-use, open-source PDF application to preview and extract content and metadata from PDFs, add or remove passwords, modify, merge, convert and compress PDFs**', icon="ℹ️")
-#----------------------------------------
+# File uploader
+uploaded_file = st.file_uploader("Choose PDF file", type="pdf")
 
-#---------------------------------------------------------------------------------------------------------------------------------
-### Functions & Definitions
-#---------------------------------------------------------------------------------------------------------------------------------
+if uploaded_file is not None:
+    # Text input for password
+    password = st.text_input("Enter a password to protect your PDF", type="password")
+    
+    # Dropdown to select encryption algorithm
+    encryption_algorithms = ["RC4-40", "RC4-128", "AES-128", "AES-256-R5", "AES-256"]
+    selected_algorithm = st.selectbox("Select encryption algorithm", encryption_algorithms)
+    st.divider()
 
-# Function to extract text and metadata from PDF
-def extract_pdf_info(pdf_file):
-    document = fitz.open(stream=pdf_file.read(), filetype="pdf")
-    metadata = document.metadata
-    text = [document.load_page(page_num).get_text() for page_num in range(len(document))]
-    return metadata, text, document
+    st.write(f"You have selected **{uploaded_file.name}** for protection.")
+    if st.button("**Protect PDF**"):
 
-# Function to convert PDF page to image
-def pdf_page_to_image(doc, page_num):
-    page = doc.load_page(page_num)
-    pix = page.get_pixmap()
-    img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
-    return img
+        if password:
+            pdf_reader = PdfReader(uploaded_file)
+            pdf_writer = PdfWriter()
 
-#---------------------------------------------------------------------------------------------------------------------------------
-### Main app
-#---------------------------------------------------------------------------------------------------------------------------------
+            # Adding pages to the writer
+            for page in pdf_reader.pages:
+                pdf_writer.add_page(page)
 
-uploaded_file = st.file_uploader("Upload a PDF file", type="pdf")
+            # Selecting the encryption algorithm
+            encryption_type = {
+                "RC4-40": {"algorithm": "RC4-40", "permissions": {"print": False}},
+                "RC4-128": {"algorithm": "RC4-128"},
+                "AES-128": {"algorithm": "AES-128"},
+                "AES-256-R5": {"algorithm": "AES-256", "use_aes256r5": True},
+                "AES-256": {"algorithm": "AES-256"}
+            }
+            
+            selected_algo_params = encryption_type[selected_algorithm]
 
-tab1, tab2, tab3, tab4, tab5  = st.tabs(["**Preview**","**Extract**","**Convert**","**Merge**","**Reduce**"])
+            with st.spinner("Protecting PDF..."):
+                pdf_writer.encrypt(password, **selected_algo_params)
+
+            output_pdf = f"protected_{uploaded_file.name}"
+            with open(output_pdf, "wb") as f:
+                pdf_writer.write(f)
+
+            with open(output_pdf, "rb") as f:
+                st.success("Your PDF has been protected and is ready for download.")
+                st.download_button(
+                    label="**Download Password Protected PDF**", 
+                    data=f, 
+                    file_name=output_pdf, 
+                    mime="application/pdf"
+                )
+        else:
+            st.warning("Please enter a password to protect your PDF.")
+else:
+    st.info("Please upload a PDF file to protect.")
