@@ -21,7 +21,7 @@ from PIL import Image
 from io import BytesIO
 #----------------------------------------
 import fitz
-from PyPDF2 import PdfFileReader
+from PyPDF2 import PdfMerger, PdfReader, PdfWriter
 from pdf2image import convert_from_bytes
 
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -47,13 +47,6 @@ st.info('**An easy-to-use, open-source PDF application to preview and extract co
 ### Functions & Definitions
 #---------------------------------------------------------------------------------------------------------------------------------
 
-
-@st.cache_data(ttl="2h") 
-def extract_metadata(pdf_file):
-    pdf_reader = PdfFileReader(pdf_file)
-    metadata = pdf_reader.getDocumentInfo()
-    return metadata
-
 @st.cache_data(ttl="2h")
 def pdf_to_images(pdf_file):
     doc = fitz.open(stream=pdf_file.read(), filetype="pdf")
@@ -66,10 +59,10 @@ def pdf_to_images(pdf_file):
     return images
 
 @st.cache_data(ttl="2h")
-def extract_metadata(pdf_file):
-    pdf_reader = PdfFileReader(pdf_file)
-    metadata = pdf_reader.getDocumentInfo()
-    return metadata
+def get_pdf_metadata(pdf_file):
+    pdf_reader = PyPDF2.PdfReader(pdf_file)
+    pdf_info = pdf_reader.metadata
+    return pdf_info
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -106,7 +99,7 @@ with tab1:
                 with stats_expander:
 
                     pdf_file = BytesIO(uploaded_file.read())
-                    metadata = extract_metadata(pdf_file)
+                    metadata = get_pdf_metadata(pdf_file)
                     if metadata:
                         for key, value in metadata.items():
                             st.write(f"**{key}:** {value}")
@@ -123,4 +116,14 @@ with tab1:
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Compress
+#---------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 #---------------------------------------------------------------------------------------------------------------------------------
