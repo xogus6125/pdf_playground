@@ -20,7 +20,7 @@ from PIL import Image
 #----------------------------------------
 from io import BytesIO
 #----------------------------------------
-#import fitz
+import fitz
 from PyPDF2 import PdfFileReader
 from pdf2image import convert_from_bytes
 
@@ -47,19 +47,23 @@ st.info('**An easy-to-use, open-source PDF application to preview and extract co
 ### Functions & Definitions
 #---------------------------------------------------------------------------------------------------------------------------------
 
-@st.cache_data(ttl="2h") 
-def display_pdf(pdf_file):
-    # Convert PDF to images
-    images = convert_from_bytes(pdf_file.read())
-    st.subheader("PDF Content:")
-    for i, image in enumerate(images):
-        st.image(image, caption=f'Page {i + 1}', use_column_width=True)
 
 @st.cache_data(ttl="2h") 
 def extract_metadata(pdf_file):
     pdf_reader = PdfFileReader(pdf_file)
     metadata = pdf_reader.getDocumentInfo()
     return metadata
+
+@st.cache_data(ttl="2h")
+def pdf_to_images(pdf_file):
+    doc = fitz.open(stream=pdf_file.read(), filetype="pdf")
+    images = []
+    for page_num in range(len(doc)):
+        page = doc.load_page(page_num)
+        pix = page.get_pixmap()
+        img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
+        images.append(img)
+    return images
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -88,7 +92,9 @@ with tab1:
 
                 st.subheader("View", divider='blue') 
                 with st.container(height=750,border=True):
-                    display_pdf(BytesIO(uploaded_file.read()))
+                    images = pdf_to_images(uploaded_file)
+                    for i, image in enumerate(images):
+                        st.image(image, caption=f'Page {i + 1}', use_column_width=True)
 
                 stats_expander = st.expander("**MetaData**", expanded=False)
                 with stats_expander:
@@ -100,3 +106,15 @@ with tab1:
                             st.write(f"**{key}:** {value}")
                     else:
                         st.write("No metadata found in the PDF file.")
+        
+#---------------------------------------------------------------------------------------------------------------------------------
+### Extract
+#---------------------------------------------------------------------------------------------------------------------------------
+
+#---------------------------------------------------------------------------------------------------------------------------------
+### Merge
+#---------------------------------------------------------------------------------------------------------------------------------
+
+#---------------------------------------------------------------------------------------------------------------------------------
+### Compress
+#---------------------------------------------------------------------------------------------------------------------------------
