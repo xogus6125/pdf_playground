@@ -93,7 +93,7 @@ with tab1:
                 st.subheader("View", divider='blue') 
                 with st.container(height=750,border=True):
                     images = pdf_to_images(uploaded_file)
-                    for i, image in enumerate(uploaded_file.read()):
+                    for i, image in enumerate(images):
                         st.image(image, caption=f'Page {i + 1}', use_column_width=True)
 
                 stats_expander = st.expander("**MetaData**", expanded=False)
