@@ -40,12 +40,12 @@ from pypdf.errors import PdfReadError, PdfStreamError
 ### Title and description for your Streamlit app
 #---------------------------------------------------------------------------------------------------------------------------------
 
-st.set_page_config(page_title="PDF Playground",
+st.set_page_config(page_title="PDF Playground | v0.1",
                     layout="wide",
                     page_icon="📘",            
                     initial_sidebar_state="collapsed")
 #----------------------------------------
-st.title(f""":rainbow[PDF Playground | v0.1]""")
+st.title(f""":rainbow[PDF Playground]""")
 st.markdown(
     '''
     Created by | <a href="mailto:avijit.mba18@gmail.com">Avijit Chakraborty</a>' |
@@ -78,7 +78,3 @@ def pdf_page_to_image(doc, page_num):
 #---------------------------------------------------------------------------------------------------------------------------------
 
 tab1, tab2, tab3, tab4, tab5  = st.tabs(["**Preview**","**Extract**","**Convert**","**Merge**","**Reduce**"])
-
-#---------------------------------------------------------------------------------------------------------------------------------
-### Content
-#---------------------------------------------------------------------------------------------------------------------------------
