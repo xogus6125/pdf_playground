@@ -58,12 +58,24 @@ def pdf_to_images(pdf_file):
         images.append(img)
     return images
 
+#------------------------------------------------------------------------------------
+
+@st.cache_data(ttl="2h")
+def merge_pdfs(pdf_files):
+    merger = PdfMerger()
+    for pdf_file in pdf_files:
+        merger.append(pdf_file)
+    merged_pdf = io.BytesIO()
+    merger.write(merged_pdf)
+    merger.close()
+    merged_pdf.seek(0)
+    return merged_pdf
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
 
-tab1, tab2, tab3, tab4, tab5, tab6  = st.tabs(["**Preview**","**Extract**","**Merge**","**Compress**","**Protect**","**Unlock**"])
+tab1, tab2, tab3, tab4, tab5, tab6  = st.tabs(["**Preview**","**Extract**","**➕ Merge**","**Compress**","**Protect**","**Unlock**"])
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Content
@@ -96,10 +108,40 @@ with tab1:
 ### Extract
 #---------------------------------------------------------------------------------------------------------------------------------
 
+
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Merge
 #---------------------------------------------------------------------------------------------------------------------------------
 
+with tab3:
+
+        st.markdown("This app allows you to merge more than two pdf files", unsafe_allow_html=True)  
+        uploaded_files = st.file_uploader("**Choose PDF files**", type="pdf", accept_multiple_files=True)
+        st.divider()
+
+        if uploaded_files:
+
+            col1, col2 = st.columns((0.2,0.8))
+            with col1:
+                
+                st.write(f"You have selected **{len(uploaded_files)} PDF file(s)** for merging.")
+                if st.button("**Merge PDFs**"):
+                    with st.spinner("Merging PDFs..."):
+                        merged_pdf = merge_pdfs(uploaded_files)
+                    st.success("PDFs merged successfully!")
+
+                    st.download_button(label="**📥 Download Merged PDF**",data=merged_pdf,file_name="merged_pdf.pdf",mime="application/pdf")
+
+                    with col2:
+
+                        st.subheader("**View : Merged PDF**",divider='blue')    
+                        with st.container(height=600,border=True):
+
+                            merged_pdf.seek(0)
+                            images = pdf_to_images(merged_pdf)
+                            for page_num, img in enumerate(images):
+                                st.image(img, caption=f"Page {page_num + 1}", use_column_width=True)
+                                
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Compress
 #---------------------------------------------------------------------------------------------------------------------------------
