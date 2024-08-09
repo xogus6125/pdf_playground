@@ -21,3 +21,4 @@ docx2txt
 SpeechRecognition 
 pydub
 frontend
+pikepdf
