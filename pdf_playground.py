@@ -48,7 +48,7 @@ st.set_page_config(page_title="PDF Playground | v0.1",
 st.title(f""":rainbow[PDF Playground]""")
 st.markdown(
     '''
-    Created by | <a href="mailto:avijit.mba18@gmail.com">Avijit Chakraborty</a>' |
+    Created by | <a href="mailto:avijit.mba18@gmail.com">Avijit Chakraborty</a> |
     for best view of the app, please **zoom-out** the browser to **75%**.
     ''',
     unsafe_allow_html=True)
@@ -77,4 +77,16 @@ def pdf_page_to_image(doc, page_num):
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
 
-tab1, tab2, tab3, tab4, tab5  = st.tabs(["**Preview**","**Extract**","**Convert**","**Merge**","**Reduce**"])
+tab1, tab2, tab3, tab4, tab5  = st.tabs(["**Preview**","**Extract**","**Merge**","**Compress**","**Protect**","**Unlock**"])
+
+#---------------------------------------------------------------------------------------------------------------------------------
+### Content
+#---------------------------------------------------------------------------------------------------------------------------------
+
+#---------------------------------------------------------------------------------------------------------------------------------
+### Preview
+#---------------------------------------------------------------------------------------------------------------------------------
+
+with tab1:
+
+    uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf")
