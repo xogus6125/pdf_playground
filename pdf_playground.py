@@ -14,8 +14,8 @@ import matplotlib.pyplot as plt
 #----------------------------------------
 import os
 import sys
+import io
 import traceback
-from io import BytesIO
 from PIL import Image
 #----------------------------------------
 from io import BytesIO
