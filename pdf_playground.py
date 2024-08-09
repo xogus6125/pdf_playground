@@ -60,7 +60,7 @@ def pdf_to_images(pdf_file):
 
 @st.cache_data(ttl="2h")
 def get_pdf_metadata(pdf_file):
-    pdf_reader = PyPDF2.PdfReader(pdf_file)
+    pdf_reader = PdfReader(pdf_file)
     pdf_info = pdf_reader.metadata
     return pdf_info
 #---------------------------------------------------------------------------------------------------------------------------------
