@@ -58,11 +58,7 @@ def pdf_to_images(pdf_file):
         images.append(img)
     return images
 
-@st.cache_data(ttl="2h")
-def get_pdf_metadata(pdf_file):
-    pdf_reader = PdfReader(pdf_file)
-    pdf_info = pdf_reader.metadata
-    return pdf_info
+
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -86,26 +82,16 @@ with tab1:
         uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf")
 
         if uploaded_file is not None:
-            
+            st.success("PDFs loaded successfully!")
             with col2:
 
                 st.subheader("View", divider='blue') 
-                with st.container(height=750,border=True):
+                with st.container(height=900,border=True):
+
                     images = pdf_to_images(uploaded_file)
                     for i, image in enumerate(images):
                         st.image(image, caption=f'Page {i + 1}', use_column_width=True)
 
-                stats_expander = st.expander("**MetaData**", expanded=False)
-                with stats_expander:
-
-                    pdf_file = BytesIO(uploaded_file.read())
-                    metadata = get_pdf_metadata(pdf_file)
-                    if metadata:
-                        for key, value in metadata.items():
-                            st.write(f"**{key}:** {value}")
-                    else:
-                        st.write("No metadata found in the PDF file.")
-        
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Extract
 #---------------------------------------------------------------------------------------------------------------------------------
