@@ -8,3 +8,5 @@ seaborn
 PyPDF2 
 pdf2image
 fitz
+PyMuPDF
+Pillow
