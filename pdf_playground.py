@@ -5,9 +5,7 @@ import streamlit as st
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Import Libraries
 #---------------------------------------------------------------------------------------------------------------------------------
-from streamlit import session_state
-from streamlit.runtime.uploaded_file_manager import UploadedFile
-from streamlit_pdf_viewer import pdf_viewer
+
 #----------------------------------------
 import numpy as np
 import pandas as pd
@@ -20,19 +18,9 @@ import traceback
 from io import BytesIO
 from PIL import Image
 #----------------------------------------
-import re
-import base64
-#import utils
-import requests
-import contextlib
-from io import BytesIO
-from pathlib import Path
-from random import random
-from datetime import datetime
-from typing import Callable, Dict, Literal, Optional, Tuple, Union
 from io import BytesIO
 #----------------------------------------
-import fitz
+#import fitz
 from PyPDF2 import PdfFileReader
 from pdf2image import convert_from_bytes
 
@@ -98,6 +86,7 @@ with tab1:
             
             with col2:
 
+                st.subheader("View", divider='blue') 
                 with st.container(height=750,border=True):
                     display_pdf(BytesIO(uploaded_file.read()))
 
