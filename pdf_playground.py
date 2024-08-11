@@ -105,11 +105,11 @@ with tab1:
 
         if uploaded_file is not None:
 
-                col1, col2 = st.columns((0.8,0.8))
+                col1, col2 = st.columns((0.8,0.2))
                 with col1:
                     
                     st.success("PDFs loaded successfully!")
-                    with st.container(height=700,border=True):
+                    with st.container(height=500,border=True):
 
                         images = pdf_to_images(uploaded_file)
                         for i, image in enumerate(images):
