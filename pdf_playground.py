@@ -109,7 +109,7 @@ with tab1:
                 with col1:
                     
                     st.success("PDFs loaded successfully!")
-                    with st.container(height=650,border=True):
+                    with st.container(height=6500,border=True):
 
                         images = pdf_to_images(uploaded_file)
                         for i, image in enumerate(images):
@@ -145,8 +145,8 @@ with tab3:
 
                     with col2:
 
-                        st.subheader("**View : Merged PDF**",divider='blue')    
-                        with st.container(height=600,border=True):
+                        #st.subheader("**View : Merged PDF**",divider='blue')    
+                        with st.container(height=650,border=True):
 
                             merged_pdf.seek(0)
                             images = pdf_to_images(merged_pdf)
@@ -199,8 +199,8 @@ with tab4:
 
                             with col2:
 
-                                st.subheader("**View : Compressed PDF**",divider='blue')    
-                                with st.container(height=600,border=True):
+                                #st.subheader("**View : Compressed PDF**",divider='blue')    
+                                with st.container(height=700,border=True):
 
                                     #compressed_pdf.seek(0)
                                     images = pdf_to_images_bytes(compressed_pdf)
