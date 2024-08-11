@@ -109,7 +109,7 @@ with tab1:
                 with col1:
                     
                     st.success("PDFs loaded successfully!")
-                    with st.container(height=500,border=True):
+                    with st.container(height=700,border=True):
 
                         images = pdf_to_images(uploaded_file)
                         for i, image in enumerate(images):
