@@ -251,13 +251,18 @@ with tab4:
                                 with st.container(height=700,border=True):
 
                                     #compressed_pdf.seek(0)
-                                    images = pdf_to_images_bytes(compressed_pdf)
-                                    for page_num, img in enumerate(images):
-                                        st.image(img, caption=f"Page {page_num + 1}", use_column_width=True)
+                                    #images = pdf_to_images_bytes(compressed_pdf)
+                                    #for page_num, img in enumerate(images):
+                                        #st.image(img, caption=f"Page {page_num + 1}", use_column_width=True)
+
+                                    if 'compressed_pdf' in locals():  # Ensure compressed_pdf exists before processing
+                                        compressed_pdf_bytes = compressed_pdf  # Assuming compressed_pdf is already in bytes
+                                        images = pdf_to_images_bytes(compressed_pdf_bytes)
+                                        for page_num, img in enumerate(images):
+                                            st.image(img, caption=f"Page {page_num + 1}", use_column_width=True)
 
                                     #os.remove(temp_input_path)
                                     #os.remove(temp_output_path)  
-
 
         else:
                 st.info("Please upload a PDF file to compress.")
