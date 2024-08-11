@@ -12,3 +12,5 @@ PyMuPDF
 Pillow
 pikepdf
 poppler-utils
+docx
+pdf2docx
