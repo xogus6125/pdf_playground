@@ -23,7 +23,7 @@ from io import BytesIO
 import fitz
 from PyPDF2 import PdfMerger, PdfReader, PdfWriter
 from pdf2image import convert_from_bytes
-
+import pikepdf
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Title and description for your Streamlit app
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -47,7 +47,6 @@ st.info('**An easy-to-use, open-source PDF application to preview and extract co
 ### Functions & Definitions
 #---------------------------------------------------------------------------------------------------------------------------------
 
-@st.cache_data(ttl="2h")
 def pdf_to_images(pdf_file):
     doc = fitz.open(stream=pdf_file.read(), filetype="pdf")
     images = []
@@ -60,7 +59,6 @@ def pdf_to_images(pdf_file):
 
 #------------------------------------------------------------------------------------
 
-@st.cache_data(ttl="2h")
 def merge_pdfs(pdf_files):
     merger = PdfMerger()
     for pdf_file in pdf_files:
@@ -73,19 +71,15 @@ def merge_pdfs(pdf_files):
 
 #------------------------------------------------------------------------------------
 
-@st.cache_data(ttl="2h")
 def compress_pdf(input_pdf, output_pdf, compression_factor):
     reader = PdfReader(input_pdf)
     writer = PdfWriter()
-
     for page in reader.pages:
         page.compress_content_streams()
         writer.add_page(page)
-
     with open(output_pdf, 'wb') as f_out:
         writer.write(f_out)
 
-@st.cache_data(ttl="2h")
 def pdf_to_images_bytes(pdf_bytes):
     images = convert_from_bytes(pdf_bytes)
     return images
@@ -166,7 +160,7 @@ with tab3:
 
 with tab4:
 
-        st.markdown("This app allows you to reduce/compresss sizes of the PDF", unsafe_allow_html=True)  
+        st.markdown("This app allows you to reduce/compress sizes of the PDF", unsafe_allow_html=True)  
         uploaded_files = st.file_uploader("**Choose PDF file**", type="pdf", accept_multiple_files=True)
         compression_factor = st.slider("**Select compression factor**", 0.1, 1.0, 0.5, 0.1)
         st.divider()
@@ -217,6 +211,79 @@ with tab4:
                                     os.remove(temp_input_path)
                                     os.remove(temp_output_path)  
 
+#---------------------------------------------------------------------------------------------------------------------------------
+### Protection
+#---------------------------------------------------------------------------------------------------------------------------------
+
+with tab5:
+
+        st.markdown("This app allows you to protect the PDF using given password", unsafe_allow_html=True) 
+        uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf")
+        st.divider()
+
+        if uploaded_file is not None:
+
+                st.write(f"You have selected **{uploaded_file.name}** to protect. Please enter the password below and press **Protect** to protect the PDF.")
+                password = st.text_input("**Enter a password to protect your PDF**", type="password")
+
+                if st.button("**Protect**"):
+
+                    if password:
+                        pdf_reader = PdfReader(uploaded_file)
+                        pdf_writer = PdfWriter()
+                        for page in pdf_reader.pages:
+                            pdf_writer.add_page(page)
+                        with st.spinner("Protecting PDFs..."):
+                            pdf_writer.encrypt(user_pwd=password, owner_pwd=None, use_128bit=True)
+
+                        output_pdf = f"protected_{uploaded_file.name}"
+                        with open(output_pdf, "wb") as f:
+                            pdf_writer.write(f)
+                    
+                        with open(output_pdf, "rb") as f:
+                            st.success(f"Your PDF has been password protected and is ready for download.")
+                            st.download_button(label="**📥 Download Password Protected PDF**",data=f,file_name="protected.pdf",mime="application/pdf")
+
+                    else:
+                        st.warning("Please enter a password to protect your PDF.")
+        else:
+                st.info("Please upload a PDF file to protect.")
+
+#---------------------------------------------------------------------------------------------------------------------------------
+### Unlock
+#---------------------------------------------------------------------------------------------------------------------------------
+
+with tab6:
+
+        st.markdown("This app allows you to remove the password from the protected PDF", unsafe_allow_html=True) 
+        uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf")
+        st.divider()
+
+        if uploaded_file is not None:
+                
+                st.write(f"You have selected **{uploaded_file.name}** for unlock. Please enter the password below and press **Unlock** to remove the password.")
+                password = st.text_input("**Enter the password to unlock the PDF**", type="password")
+
+                if st.button("**Unlock**"):
+
+                    if uploaded_file and password:
+                        try:
+                            with pikepdf.open(uploaded_file, password=password) as pdf:
+                                with st.spinner("Unlocking PDFs..."):
+                                    output_pdf = f"unlocked_{uploaded_file.name}"
+                                pdf.save(output_pdf)
+
+                            with open(output_pdf, "rb") as f:
+                                st.success(f"Password has been removed from the PDF and is ready for download.")
+                                st.download_button(label="**📥 Download Unlocked PDF**",data=f,file_name="unlocked.pdf",mime="application/pdf")
+
+                        except pikepdf._qpdf.PasswordError:
+                            st.error("Incorrect password. Please try again.")
+                        except Exception as e:
+                            st.error(f"An error occurred: {str(e)}")
+
+        else:
+                st.info("Please upload a PDF file to unlock")
 
 
 
