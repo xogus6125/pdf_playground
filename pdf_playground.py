@@ -268,7 +268,7 @@ with tab4:
                                     #os.remove(temp_output_path)  
 
         else:
-                st.info("Please upload a PDF file to compress.")
+                st.warning("Please upload a PDF file to compress.")
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Protect
@@ -306,7 +306,7 @@ with tab5:
                     else:
                         st.warning("Please enter a password to protect your PDF.")
         else:
-                st.info("Please upload a PDF file to protect.")
+                st.warning("Please upload a PDF file to protect.")
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Unlock
@@ -344,7 +344,7 @@ with tab6:
                     else:
                         st.warning("Please enter a password to unlock your PDF.")
         else:
-                st.info("Please upload a PDF file to unlock")
+                st.warning("Please upload a PDF file to unlock")
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Rotate
@@ -358,7 +358,7 @@ with tab7:
 
         if uploaded_file is not None:
                 
-                st.write(f"You have selected **{uploaded_file.name}** for rotate. Please choose the rotation angle and press **rotate** to make rotation.")
+                st.write(f"You have selected **{uploaded_file.name}** for rotate. Please choose the rotation angle and press **Rotate** to make rotation.")
                 rotation_angle = st.slider("Select rotation angle", 0, 360, 90, 90)
 
                 if st.button("**Rotate**"):        
@@ -373,7 +373,7 @@ with tab7:
                     rotated_pdf.seek(0)
         
                     st.success("PDF rotated successfully!")
-                    st.download_button(label="Download Rotated PDF", data=rotated_pdf, file_name="rotated_pdf.pdf", mime="application/pdf")
+                    st.download_button(label="**📥 Download Rotated PDF", data=rotated_pdf, file_name="rotated_pdf.pdf", mime="application/pdf")
         else:
             st.warning("Please upload a PDF file to rotate.")
 
@@ -387,6 +387,24 @@ with tab8:
         uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_resize")
         st.divider()
 
+        if uploaded_file is not None:
+                
+                st.write(f"You have selected **{uploaded_file.name}** for resize. Please choose the scale factor and press **Resize/Rescale**.")
+                scale_factor = st.slider("Select scale factor", 0.1, 2.0, 1.0, 0.1)
+
+                if st.button("**Resize/Rescale**"):    
+
+                    images = convert_from_bytes(uploaded_file.read())
+                    resized_images = [img.resize((int(img.width * scale_factor), int(img.height * scale_factor))) for img in images]
+                    resized_pdf = io.BytesIO()
+                    resized_images[0].save(resized_pdf, save_all=True, append_images=resized_images[1:], format="PDF")
+                    resized_pdf.seek(0)
+                    
+                    st.success("PDF resized or rescaled successfully!")
+                    st.download_button(label="**📥 Download Resized PDF", data=resized_pdf, file_name="resized_pdf.pdf", mime="application/pdf")
+        else:
+            st.warning("Please upload a PDF file to resize or rescale.")
+
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Convert
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -396,3 +414,27 @@ with tab9:
         st.markdown("This app allows you to convert the uploaded PDF", unsafe_allow_html=True) 
         uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_convert")
         st.divider()
+
+        if uploaded_file is not None:
+                
+                st.write(f"You have selected **{uploaded_file.name}** for resize. Press **Convert** to transfer it to word file.")
+                
+                if st.button("**Convert**"):   
+
+                    pdf_file_path = f"temp_{uploaded_file.name}"
+                    word_file_path = f"{os.path.splitext(uploaded_file.name)[0]}.docx"
+                    
+                    with open(pdf_file_path, "wb") as f:
+                        f.write(uploaded_file.getbuffer())
+                    with st.spinner("Converting to Word..."):
+                        converter = Converter(pdf_file_path)
+                    converter.convert(word_file_path, start=0, end=None)
+                    converter.close()
+
+                    with open(word_file_path, "rb") as f:
+                        st.success("PDF converted to Word successfully!")
+                    st.download_button(label="**📥 Download Word File**", data=f, file_name=word_file_path, mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                    os.remove(pdf_file_path)
+                    os.remove(word_file_path)
+        else:
+            st.warning("Please upload a PDF file to convert.")
