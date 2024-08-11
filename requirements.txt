@@ -11,3 +11,4 @@ fitz
 PyMuPDF
 Pillow
 pikepdf
+poppler-utils
