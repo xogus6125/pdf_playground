@@ -131,14 +131,15 @@ with tab1:
 
                 with col2:
 
-                    st.subheader("Metadata")
-                    metadata = extract_metadata(uploaded_file)
-                    if metadata:
+                    stats_expander = st.expander("**MetaData**", expanded=False)
+                    with stats_expander:
+                        metadata = extract_metadata(uploaded_file)
+                        if metadata:
 
-                        metadata_df = pd.DataFrame(list(metadata.items()), columns=["Key", "Value"])
-                        st.table(metadata_df)
-                    else:
-                        st.write("No metadata found in the PDF file.")
+                            metadata_df = pd.DataFrame(list(metadata.items()), columns=["Key", "Value"])
+                            st.table(metadata_df)
+                        else:
+                            st.write("No metadata found in the PDF file.")
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Extract
@@ -151,13 +152,22 @@ with tab2:
     st.divider()
 
     if uploaded_file is not None:
-        st.write(f"You have selected **{uploaded_file.name}** for text extraction.")
-        if st.button("**Extract Text**"):
-            with st.spinner("Extracting text..."):
-                text = extract_text(uploaded_file)
-            st.success("Text extracted successfully!")
-            st.text_area("Extracted Text", value=text, height=400)
-            
+
+        col1, col2 = st.columns((0.2,0.8))
+        with col1:
+             
+            st.write(f"You have selected **{uploaded_file.name}** for text extraction.")
+            if st.button("**Extract Text**"):
+                with st.spinner("Extracting text..."):
+                    text = extract_text(uploaded_file)
+                st.success("Text extracted successfully!")
+
+                st.download_button(label="**📥 Download Extracted Text**",data=text,file_name="extracted.txt",mime="application/txt")
+
+                with col2:
+
+                    st.text_area("Extracted Text", value=text, height=500)
+
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Merge
 #---------------------------------------------------------------------------------------------------------------------------------
