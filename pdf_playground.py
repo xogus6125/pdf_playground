@@ -24,6 +24,9 @@ import fitz
 from PyPDF2 import PdfMerger, PdfReader, PdfWriter
 from pdf2image import convert_from_bytes
 import pikepdf
+from docx import Document
+from pdf2docx import Converter
+import os
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Title and description for your Streamlit app
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -101,7 +104,7 @@ def extract_text(pdf_file):
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
 
-tab1, tab2, tab3, tab4, tab5, tab6  = st.tabs(["**Preview**","**Extract**","**Merge**","**Compress**","**Protect**","**Unlock**"])
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9  = st.tabs(["**Preview**","**Extract**","**Merge**","**Compress**","**Protect**","**Unlock**","**Rotate**","**Resize**","**Convert**"])
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Content
@@ -166,7 +169,7 @@ with tab2:
 
                 with col2:
 
-                    st.text_area("Extracted Text", value=text, height=700)
+                    st.text_area("Extracted Text", value=text, height=500)
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Merge
@@ -343,7 +346,53 @@ with tab6:
         else:
                 st.info("Please upload a PDF file to unlock")
 
+#---------------------------------------------------------------------------------------------------------------------------------
+### Rotate
+#---------------------------------------------------------------------------------------------------------------------------------
 
+with tab7:
 
+        st.markdown("This app allows you to rotate the uploaded PDF", unsafe_allow_html=True) 
+        uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_rotate")
+        st.divider()
 
+        if uploaded_file is not None:
+                
+                st.write(f"You have selected **{uploaded_file.name}** for rotate. Please choose the rotation angle and press **rotate** to make rotation.")
+                rotation_angle = st.slider("Select rotation angle", 0, 360, 90, 90)
 
+                if st.button("**Rotate**"):        
+
+                    reader = PdfReader(uploaded_file)
+                    writer = PdfWriter()
+                    for page in reader.pages:
+                        page.rotate(rotation_angle)
+                        writer.add_page(page)
+                    rotated_pdf = io.BytesIO()
+                    writer.write(rotated_pdf)
+                    rotated_pdf.seek(0)
+        
+                    st.success("PDF rotated successfully!")
+                    st.download_button(label="Download Rotated PDF", data=rotated_pdf, file_name="rotated_pdf.pdf", mime="application/pdf")
+        else:
+            st.warning("Please upload a PDF file to rotate.")
+
+#---------------------------------------------------------------------------------------------------------------------------------
+### Resize
+#---------------------------------------------------------------------------------------------------------------------------------
+
+with tab8:
+
+        st.markdown("This app allows you to resize the uploaded PDF", unsafe_allow_html=True) 
+        uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_resize")
+        st.divider()
+
+#---------------------------------------------------------------------------------------------------------------------------------
+### Convert
+#---------------------------------------------------------------------------------------------------------------------------------
+
+with tab9:
+
+        st.markdown("This app allows you to convert the uploaded PDF", unsafe_allow_html=True) 
+        uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_convert")
+        st.divider()
