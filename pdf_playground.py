@@ -218,18 +218,18 @@ with tab4:
 with tab5:
 
         st.markdown("This app allows you to protect the PDF using given password", unsafe_allow_html=True) 
-        uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf")
+        uploaded_file_pt = st.file_uploader("**Choose PDF file**", type="pdf")
         st.divider()
 
-        if uploaded_file is not None:
+        if uploaded_file_pt is not None:
 
-                st.write(f"You have selected **{uploaded_file.name}** to protect. Please enter the password below and press **Protect** to protect the PDF.")
+                st.write(f"You have selected **{uploaded_file_pt.name}** to protect. Please enter the password below and press **Protect** to protect the PDF.")
                 password = st.text_input("**Enter a password to protect your PDF**", type="password")
 
                 if st.button("**Protect**"):
 
                     if password:
-                        pdf_reader = PdfReader(uploaded_file)
+                        pdf_reader = PdfReader(uploaded_file_pt)
                         pdf_writer = PdfWriter()
                         for page in pdf_reader.pages:
                             pdf_writer.add_page(page)
@@ -256,21 +256,21 @@ with tab5:
 with tab6:
 
         st.markdown("This app allows you to remove the password from the protected PDF", unsafe_allow_html=True) 
-        uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf")
+        uploaded_file_ul = st.file_uploader("**Choose PDF file**", type="pdf")
         st.divider()
 
-        if uploaded_file is not None:
+        if uploaded_file_ul is not None:
                 
-                st.write(f"You have selected **{uploaded_file.name}** for unlock. Please enter the password below and press **Unlock** to remove the password.")
+                st.write(f"You have selected **{uploaded_file_ul.name}** for unlock. Please enter the password below and press **Unlock** to remove the password.")
                 password = st.text_input("**Enter the password to unlock the PDF**", type="password")
 
                 if st.button("**Unlock**"):
 
-                    if uploaded_file and password:
+                    if uploaded_file_ul and password:
                         try:
-                            with pikepdf.open(uploaded_file, password=password) as pdf:
+                            with pikepdf.open(uploaded_file_ul, password=password) as pdf:
                                 with st.spinner("Unlocking PDFs..."):
-                                    output_pdf = f"unlocked_{uploaded_file.name}"
+                                    output_pdf = f"unlocked_{uploaded_file_ul.name}"
                                 pdf.save(output_pdf)
 
                             with open(output_pdf, "rb") as f:
@@ -285,7 +285,3 @@ with tab6:
         else:
                 st.info("Please upload a PDF file to unlock")
 
-
-
-
-#---------------------------------------------------------------------------------------------------------------------------------
