@@ -108,7 +108,6 @@ with tab1:
                 col1, col2 = st.columns((0.8,0.8))
                 with col1:
                     
-                    st.subheader("View", divider='blue') 
                     st.success("PDFs loaded successfully!")
                     with st.container(height=700,border=True):
 
@@ -131,7 +130,7 @@ with tab3:
         uploaded_files = st.file_uploader("**Choose PDF files**", type="pdf", accept_multiple_files=True)
         st.divider()
 
-        if uploaded_files is not None:
+        if uploaded_files:
 
             col1, col2 = st.columns((0.2,0.8))
             with col1:
@@ -165,7 +164,7 @@ with tab4:
         compression_factor = st.slider("**Select compression factor**", 0.1, 1.0, 0.5, 0.1)
         st.divider()
 
-        if uploaded_files is not None:
+        if uploaded_files:
 
             col1, col2 = st.columns((0.2,0.8))
             with col1:
@@ -210,6 +209,9 @@ with tab4:
 
                                     os.remove(temp_input_path)
                                     os.remove(temp_output_path)  
+
+        else:
+                st.info("Please upload a PDF file to compress.")
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Protect
