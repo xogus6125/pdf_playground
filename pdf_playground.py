@@ -134,8 +134,9 @@ with tab1:
                     st.subheader("Metadata")
                     metadata = extract_metadata(uploaded_file)
                     if metadata:
-                        for key, value in metadata.items():
-                            st.write(f"**{key}:** {value}")
+
+                        metadata_df = pd.DataFrame(list(metadata.items()), columns=["Key", "Value"])
+                        st.table(metadata_df)
                     else:
                         st.write("No metadata found in the PDF file.")
 
@@ -143,7 +144,20 @@ with tab1:
 ### Extract
 #---------------------------------------------------------------------------------------------------------------------------------
 
+with tab2:
 
+    st.markdown("This app allows you to extract text from the PDF", unsafe_allow_html=True) 
+    uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf", key="file_uploader_extract")
+    st.divider()
+
+    if uploaded_file is not None:
+        st.write(f"You have selected **{uploaded_file.name}** for text extraction.")
+        if st.button("**Extract Text**"):
+            with st.spinner("Extracting text..."):
+                text = extract_text(uploaded_file)
+            st.success("Text extracted successfully!")
+            st.text_area("Extracted Text", value=text, height=400)
+            
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Merge
 #---------------------------------------------------------------------------------------------------------------------------------
