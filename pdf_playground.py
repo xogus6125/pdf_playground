@@ -80,9 +80,23 @@ def compress_pdf(input_pdf, output_pdf, compression_factor):
     with open(output_pdf, 'wb') as f_out:
         writer.write(f_out)
 
+#------------------------------------------------------------------------------------
+
 def pdf_to_images_bytes(pdf_bytes):
     images = convert_from_bytes(pdf_bytes)
     return images
+
+def extract_metadata(pdf_file):
+    pdf_reader = PdfReader(pdf_file)
+    metadata = pdf_reader.metadata
+    return metadata
+
+def extract_text(pdf_file):
+    pdf_reader = PdfReader(pdf_file)
+    text = ""
+    for page in pdf_reader.pages:
+        text += page.extract_text()
+    return text
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -114,6 +128,16 @@ with tab1:
                         images = pdf_to_images(uploaded_file)
                         for i, image in enumerate(images):
                             st.image(image, caption=f'Page {i + 1}', use_column_width=True)
+
+                with col2:
+
+                    st.subheader("Metadata")
+                    metadata = extract_metadata(uploaded_file)
+                    if metadata:
+                        for key, value in metadata.items():
+                            st.write(f"**{key}:** {value}")
+                    else:
+                        st.write("No metadata found in the PDF file.")
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Extract
