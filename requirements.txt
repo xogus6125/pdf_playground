@@ -10,3 +10,4 @@ pdf2image
 fitz
 PyMuPDF
 Pillow
+pikepdf
