@@ -166,7 +166,7 @@ with tab2:
 
                 with col2:
 
-                    st.text_area("Extracted Text", value=text, height=500)
+                    st.text_area("Extracted Text", value=text, height=700)
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Merge
