@@ -99,22 +99,22 @@ tab1, tab2, tab3, tab4, tab5, tab6  = st.tabs(["**Preview**","**Extract**","**Me
 
 with tab1:
 
-    col1, col2 = st.columns((0.2,0.8))
-    with col1:
-
-        st.subheader("Input", divider='blue') 
+        st.markdown("This app allows you to merge more than two pdf files", unsafe_allow_html=True) 
         uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_preview")
+        st.divider()
 
         if uploaded_file is not None:
-            st.success("PDFs loaded successfully!")
-            with col2:
 
-                st.subheader("View", divider='blue') 
-                with st.container(height=900,border=True):
+                col1, col2 = st.columns((0.8,0.8))
+                with col1:
+                    
+                    st.subheader("View", divider='blue') 
+                    st.success("PDFs loaded successfully!")
+                    with st.container(height=700,border=True):
 
-                    images = pdf_to_images(uploaded_file)
-                    for i, image in enumerate(images):
-                        st.image(image, caption=f'Page {i + 1}', use_column_width=True)
+                        images = pdf_to_images(uploaded_file)
+                        for i, image in enumerate(images):
+                            st.image(image, caption=f'Page {i + 1}', use_column_width=True)
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Extract
@@ -153,9 +153,6 @@ with tab3:
                             images = pdf_to_images(merged_pdf)
                             for page_num, img in enumerate(images):
                                 st.image(img, caption=f"Page {page_num + 1}", use_column_width=True)
-
-        else:
-                st.info("Please upload a PDF files to merge")
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Compress
@@ -213,9 +210,6 @@ with tab4:
 
                                     os.remove(temp_input_path)
                                     os.remove(temp_output_path)  
-
-        else:
-                st.info("Please upload a PDF file to compress")
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Protect
