@@ -131,7 +131,7 @@ with tab3:
         uploaded_files = st.file_uploader("**Choose PDF files**", type="pdf", accept_multiple_files=True)
         st.divider()
 
-        if uploaded_files:
+        if uploaded_files is not None:
 
             col1, col2 = st.columns((0.2,0.8))
             with col1:
@@ -154,6 +154,9 @@ with tab3:
                             for page_num, img in enumerate(images):
                                 st.image(img, caption=f"Page {page_num + 1}", use_column_width=True)
 
+        else:
+                st.info("Please upload a PDF files to merge")
+
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Compress
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -165,7 +168,7 @@ with tab4:
         compression_factor = st.slider("**Select compression factor**", 0.1, 1.0, 0.5, 0.1)
         st.divider()
 
-        if uploaded_files:
+        if uploaded_files is not None:
 
             col1, col2 = st.columns((0.2,0.8))
             with col1:
@@ -210,6 +213,9 @@ with tab4:
 
                                     os.remove(temp_input_path)
                                     os.remove(temp_output_path)  
+
+        else:
+                st.info("Please upload a PDF file to compress")
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Protect
@@ -282,6 +288,8 @@ with tab6:
                         except Exception as e:
                             st.error(f"An error occurred: {str(e)}")
 
+                    else:
+                        st.warning("Please enter a password to unlock your PDF.")
         else:
                 st.info("Please upload a PDF file to unlock")
 
