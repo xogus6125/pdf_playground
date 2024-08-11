@@ -346,5 +346,4 @@ with tab6:
 
 
 
-st.markdown("---")
-st.markdown("Created by Avijit Chakraborty")
+
