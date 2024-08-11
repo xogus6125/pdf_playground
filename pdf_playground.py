@@ -131,7 +131,7 @@ with tab1:
 
                 with col2:
 
-                    stats_expander = st.expander("**MetaData**", expanded=False)
+                    stats_expander = st.expander("**MetaData**", expanded=True)
                     with stats_expander:
                         metadata = extract_metadata(uploaded_file)
                         if metadata:
@@ -255,8 +255,9 @@ with tab4:
                                     for page_num, img in enumerate(images):
                                         st.image(img, caption=f"Page {page_num + 1}", use_column_width=True)
 
-                                    os.remove(temp_input_path)
-                                    os.remove(temp_output_path)  
+                                    #os.remove(temp_input_path)
+                                    #os.remove(temp_output_path)  
+
 
         else:
                 st.info("Please upload a PDF file to compress.")
