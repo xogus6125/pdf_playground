@@ -343,3 +343,8 @@ with tab6:
         else:
                 st.info("Please upload a PDF file to unlock")
 
+
+
+
+st.markdown("---")
+st.markdown("Created by Avijit Chakraborty")
