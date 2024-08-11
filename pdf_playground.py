@@ -257,7 +257,7 @@ with tab4:
 
                                     if 'compressed_pdf' in locals():  # Ensure compressed_pdf exists before processing
                                         compressed_pdf_bytes = compressed_pdf  # Assuming compressed_pdf is already in bytes
-                                        images = pdf_to_images_bytes(compressed_pdf_bytes)
+                                        images = pdf_to_images_bytes(compressed_pdf)
                                         for page_num, img in enumerate(images):
                                             st.image(img, caption=f"Page {page_num + 1}", use_column_width=True)
 
