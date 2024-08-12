@@ -404,7 +404,7 @@ with tab8:
 
                 if st.button("**Resize/Rescale**"):    
 
-                    images = convert_from_bytes(uploaded_file.read())
+                    images = convert_from_bytes(uploaded_file)
                     resized_images = [img.resize((int(img.width * scale_factor), int(img.height * scale_factor))) for img in images]
                     resized_pdf = io.BytesIO()
                     resized_images[0].save(resized_pdf, save_all=True, append_images=resized_images[1:], format="PDF")
