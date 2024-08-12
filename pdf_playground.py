@@ -21,12 +21,12 @@ from PIL import Image
 from io import BytesIO
 #----------------------------------------
 import fitz
-from PyPDF2 import PdfMerger, PdfReader, PdfWriter
-from pdf2image import convert_from_bytes
 import pikepdf
 from docx import Document
 from pdf2docx import Converter
-import os
+from PyPDF2 import PdfMerger, PdfReader, PdfWriter
+from pdf2image import convert_from_path, convert_from_bytes
+from pdf2image.exceptions import PDFInfoNotInstalledError,PDFPageCountError,PDFSyntaxError
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Title and description for your Streamlit app
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -368,7 +368,7 @@ with tab7:
         if uploaded_file is not None:
                 
                 st.write(f"You have selected **{uploaded_file.name}** for rotate. Please choose the rotation angle and press **Rotate** to make rotation.")
-                rotation_angle = st.slider("**Select rotation angle**", 0, 360, 90, 90)
+                rotation_angle = st.slider("**select rotation angle**", 0, 360, 90, 90)
 
                 if st.button("**Rotate**"):        
 
@@ -400,7 +400,7 @@ with tab8:
         if uploaded_file is not None:
                 
                 st.write(f"You have selected **{uploaded_file.name}** for resize. Please choose the scale factor and press **Resize/Rescale**.")
-                scale_factor = st.slider("Select scale factor", 0.1, 2.0, 1.0, 0.1)
+                scale_factor = st.slider("**select scale factor**", 0.1, 2.0, 1.0, 0.1)
 
                 if st.button("**Resize/Rescale**"):    
 
