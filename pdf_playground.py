@@ -99,6 +99,9 @@ def extract_text(pdf_file):
     for page in pdf_reader.pages:
         text += page.extract_text()
     return text
+
+def convert_pdf_to_images(pdf_bytes):
+    return convert_from_bytes(pdf_bytes)
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -168,7 +171,7 @@ with tab2:
 
                 with col2:
 
-                    st.text_area("Extracted Text", value=text, height=500)
+                    st.text_area("Extracted Text", value=text, height=700)
 
     else:
                 st.warning("Please upload a PDF file to extract.")
@@ -207,7 +210,7 @@ with tab3:
                                 st.image(img, caption=f"Page {page_num + 1}", use_column_width=True)
 
         else:
-                st.warning("Please upload a PDF file to Merge.")
+                st.warning("Please upload PDF files to Merge.")
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Compress
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -220,8 +223,8 @@ with tab4:
 
         if uploaded_files:
 
-            col1, col2 = st.columns((0.2,0.8))
-            with col1:
+            #col1, col2 = st.columns((0.2,0.8))
+            #with col1:
 
                 st.write(f"You have selected **{len(uploaded_files)} PDF file** for compress.")
                 compression_factor = st.slider("**Select compression factor**", 0.1, 1.0, 0.5, 0.1)
@@ -363,6 +366,9 @@ with tab7:
 
         if uploaded_file is not None:
                 
+            col1, col2 = st.columns((0.2,0.8))
+            with col1:
+                
                 st.write(f"You have selected **{uploaded_file.name}** for rotate. Please choose the rotation angle and press **Rotate** to make rotation.")
                 rotation_angle = st.slider("**Select rotation angle**", 0, 360, 90, 90)
 
@@ -379,6 +385,12 @@ with tab7:
         
                     st.success("PDF rotated successfully!")
                     st.download_button(label="**📥 Download Rotated PDF**", data=rotated_pdf, file_name="rotated_pdf.pdf", mime="application/pdf")
+
+                    with col2:
+                            
+                        images = convert_pdf_to_images(rotated_pdf.read())
+                        for i, image in enumerate(images):
+                            st.image(image, caption=f'Page {i + 1}', use_column_width=True)
         else:
             st.warning("Please upload a PDF file to rotate.")
 
