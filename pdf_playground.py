@@ -30,7 +30,6 @@ import os
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Title and description for your Streamlit app
 #---------------------------------------------------------------------------------------------------------------------------------
-
 st.set_page_config(page_title="PDF Playground | v0.1",
                     layout="wide",
                     page_icon="📘",            
@@ -212,7 +211,6 @@ with tab4:
 
         st.markdown("This app allows you to reduce/compress sizes of the PDF", unsafe_allow_html=True)  
         uploaded_files = st.file_uploader("**Choose PDF file**", type="pdf", accept_multiple_files=True)
-        compression_factor = st.slider("**Select compression factor**", 0.1, 1.0, 0.5, 0.1)
         st.divider()
 
         if uploaded_files:
@@ -221,6 +219,8 @@ with tab4:
             with col1:
 
                 st.write(f"You have selected **{len(uploaded_files)} PDF file** for compress.")
+                compression_factor = st.slider("**Select compression factor**", 0.1, 1.0, 0.5, 0.1)
+                
                 if st.button("**Compress PDF**"):
 
                         for uploaded_file in uploaded_files:
@@ -359,7 +359,7 @@ with tab7:
         if uploaded_file is not None:
                 
                 st.write(f"You have selected **{uploaded_file.name}** for rotate. Please choose the rotation angle and press **Rotate** to make rotation.")
-                rotation_angle = st.slider("Select rotation angle", 0, 360, 90, 90)
+                rotation_angle = st.slider("**Select rotation angle**", 0, 360, 90, 90)
 
                 if st.button("**Rotate**"):        
 
@@ -373,7 +373,7 @@ with tab7:
                     rotated_pdf.seek(0)
         
                     st.success("PDF rotated successfully!")
-                    st.download_button(label="**📥 Download Rotated PDF", data=rotated_pdf, file_name="rotated_pdf.pdf", mime="application/pdf")
+                    st.download_button(label="**📥 Download Rotated PDF**", data=rotated_pdf, file_name="rotated_pdf.pdf", mime="application/pdf")
         else:
             st.warning("Please upload a PDF file to rotate.")
 
