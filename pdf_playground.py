@@ -211,6 +211,7 @@ with tab3:
 
         else:
                 st.warning("Please upload PDF files to Merge.")
+
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Compress
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -366,9 +367,6 @@ with tab7:
 
         if uploaded_file is not None:
                 
-            col1, col2 = st.columns((0.2,0.8))
-            with col1:
-                
                 st.write(f"You have selected **{uploaded_file.name}** for rotate. Please choose the rotation angle and press **Rotate** to make rotation.")
                 rotation_angle = st.slider("**Select rotation angle**", 0, 360, 90, 90)
 
@@ -386,11 +384,6 @@ with tab7:
                     st.success("PDF rotated successfully!")
                     st.download_button(label="**📥 Download Rotated PDF**", data=rotated_pdf, file_name="rotated_pdf.pdf", mime="application/pdf")
 
-                    with col2:
-                            
-                        images = convert_pdf_to_images(rotated_pdf.read())
-                        for i, image in enumerate(images):
-                            st.image(image, caption=f'Page {i + 1}', use_column_width=True)
         else:
             st.warning("Please upload a PDF file to rotate.")
 
@@ -419,6 +412,7 @@ with tab8:
                     
                     st.success("PDF resized or rescaled successfully!")
                     st.download_button(label="**📥 Download Resized PDF", data=resized_pdf, file_name="resized_pdf.pdf", mime="application/pdf")
+
         else:
             st.warning("Please upload a PDF file to resize or rescale.")
 
@@ -453,5 +447,6 @@ with tab9:
                     st.download_button(label="**📥 Download Word File**", data=f, file_name=word_file_path, mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
                     os.remove(pdf_file_path)
                     os.remove(word_file_path)
+
         else:
             st.warning("Please upload a PDF file to convert.")
