@@ -114,7 +114,7 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10  = st.tabs(["**Conte
 
 with tab1:
      
-    with st.container(height=600, border=True):
+    with st.container(height=900, border=True):
 
         st.markdown("""
             <style>
@@ -156,17 +156,15 @@ with tab1:
             <h3>🛠️ App Capabilities</h3>
             <p>This app is designed to perform a variety of tasks including:</p>
             <ul>
-            <li><strong>Summarization</strong> - Summarize different types of documents quickly and effectively.</li>
-            <li><strong>Q&A</strong> - Generate suggestive questions (prompts) and provide answers based on your queries.</li>
-            <li><strong>Generation</strong> - Generate content such as text or images based on your input prompts.</li>
-            <li><strong>Translation</strong> - Translate the input prompt into the chosen language seamlessly.</li>
-            <li><strong>Conversion</strong> - Convert input from one mode to another efficiently.</li>
-            <li><strong>Merge</strong> - Combine multiple documents into a single, cohesive file, making it easier to manage and share consolidated information.</li>
-            <li><strong>Compress</strong> - Reduce the file size of documents while maintaining quality, making them easier to store and share.</li>
-            <li><strong>Protect</strong> - Add a password to the PDF to enhance security.</li>    
-            <li><strong>Unlock</strong> - Remove the password from protected files for easy access.</li>                    
-            <li><strong>Scraping</strong> - Scrape information from a provided link with ease.</li>
-            <li><strong>Chatbot</strong> - Interact with a global chatbot or get responses based on shared information in 'Sharepoint'.</li>
+            <li><strong>View</strong> -         The **View** tab allows you to preview PDF files directly within the application.</li>
+            <li><strong>Extract</strong> -      The **Extract** tab is designed to extract text and metadata from PDF files.</li>
+            <li><strong>Merge</strong> -        The **Merge** tab lets you combine multiple PDF files into a single document.</li>
+            <li><strong>Compress</strong> -     The **Compress** tab is used to reduce the file size of PDF documents.</li>
+            <li><strong>Protect</strong> -      The **Protect** tab enables you to add password protection to your PDF files.</li>
+            <li><strong>Unlock</strong> -       The **Unlock** tab allows you to remove password protection from PDF files.</li>
+            <li><strong>Rotate</strong> -       The **Rotate** tab lets you change the orientation of pages within a PDF file.</li>
+            <li><strong>Resize</strong> -       The **Resize** tab allows you to adjust the dimensions of a PDF file. </li>    
+            <li><strong>Convert</strong> -      The **Convert** tab offers conversion options between PDF and other formats, such as Word or images.</li>                    
             </ul>
             </div>
             """, unsafe_allow_html=True)
