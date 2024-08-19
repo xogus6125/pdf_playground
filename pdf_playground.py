@@ -112,6 +112,65 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10  = st.tabs(["**Conte
 ### Content
 #---------------------------------------------------------------------------------------------------------------------------------
 
+with tab1:
+     
+    with st.container(height=600, border=True):
+
+        st.markdown("""
+            <style>
+            .info-container {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-left: 6px solid #3498db;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            }
+            .info-container h3 {
+            color: #3498db;
+            font-weight: bold;
+            margin-bottom: 10px;
+            }
+            .info-container p {
+            color: #333;
+            margin: 5px 0;
+            }
+            .info-container ul {
+            list-style-type: none;
+            padding: 0;
+            }
+            .info-container li {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            }
+            .info-container li:before {
+            content: "⭐";
+            margin-right: 10px;
+            color: #3498db;
+            font-size: 1.2em;
+            }
+            </style>
+
+                <div class="info-container">
+                <h3>🛠️ App Capabilities</h3>
+                <p>This app is designed to perform a variety of tasks including:</p>
+                <ul>
+                <li><strong>Summarization</strong> - Summarize different types of documents quickly and effectively.</li>
+                <li><strong>Q&A</strong> - Generate suggestive questions (prompts) and provide answers based on your queries.</li>
+                <li><strong>Generation</strong> - Generate content such as text or images based on your input prompts.</li>
+                <li><strong>Translation</strong> - Translate the input prompt into the chosen language seamlessly.</li>
+                <li><strong>Conversion</strong> - Convert input from one mode to another efficiently.</li>
+                <li><strong>Merge</strong> - Combine multiple documents into a single, cohesive file, making it easier to manage and share consolidated information.</li>
+                <li><strong>Compress</strong> - Reduce the file size of documents while maintaining quality, making them easier to store and share.</li>
+                <li><strong>Protect</strong> - Add a password to the PDF to enhance security.</li>    
+                <li><strong>Unlock</strong> - Remove the password from protected files for easy access.</li>                    
+                <li><strong>Scraping</strong> - Scrape information from a provided link with ease.</li>
+                <li><strong>Chatbot</strong> - Interact with a global chatbot or get responses based on shared information in 'Sharepoint'.</li>
+                </ul>
+            </div>
+            """, unsafe_allow_html=True)
+
 #---------------------------------------------------------------------------------------------------------------------------------
 ### View
 #---------------------------------------------------------------------------------------------------------------------------------
