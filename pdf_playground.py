@@ -106,7 +106,7 @@ def convert_pdf_to_images(pdf_bytes):
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
 
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9  = st.tabs(["**Preview**","**Extract**","**Merge**","**Compress**","**Protect**","**Unlock**","**Rotate**","**Resize**","**Convert**"])
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9  = st.tabs(["**View**","**Extract**","**Merge**","**Compress**","**Protect**","**Unlock**","**Rotate**","**Resize**","**Convert**"])
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Content
@@ -146,13 +146,16 @@ with tab1:
                         else:
                             st.write("No metadata found in the PDF file.")
 
+        else:
+                st.warning("Please upload a PDF file to view.")
+
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Extract
 #---------------------------------------------------------------------------------------------------------------------------------
 
 with tab2:
 
-    st.markdown("This app allows you to extract text from the PDF", unsafe_allow_html=True) 
+    st.warning("This app allows you to extract text from the PDF") 
     uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf", key="file_uploader_extract")
     st.divider()
 
@@ -182,7 +185,7 @@ with tab2:
 
 with tab3:
 
-        st.markdown("This app allows you to merge more than two pdf files", unsafe_allow_html=True)  
+        st.warning("This app allows you to merge more than two pdf files")  
         uploaded_files = st.file_uploader("**Choose PDF files**", type="pdf", accept_multiple_files=True)
         st.divider()
 
@@ -218,7 +221,7 @@ with tab3:
 
 with tab4:
 
-        st.markdown("This app allows you to reduce/compress sizes of the PDF", unsafe_allow_html=True)  
+        st.warning("This app allows you to reduce/compress sizes of the PDF")  
         uploaded_files = st.file_uploader("**Choose PDF file**", type="pdf", accept_multiple_files=True)
         st.divider()
 
@@ -285,7 +288,7 @@ with tab4:
 
 with tab5:
 
-        st.markdown("This app allows you to protect the PDF using given password", unsafe_allow_html=True) 
+        st.warning("This app allows you to protect the PDF using given password") 
         uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_protect")
         st.divider()
 
@@ -323,7 +326,7 @@ with tab5:
 
 with tab6:
 
-        st.markdown("This app allows you to remove the password from the protected PDF", unsafe_allow_html=True) 
+        st.warning("This app allows you to remove the password from the protected PDF") 
         uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_unlock")
         st.divider()
 
@@ -361,7 +364,7 @@ with tab6:
 
 with tab7:
 
-        st.markdown("This app allows you to rotate the uploaded PDF", unsafe_allow_html=True) 
+        st.warning("This app allows you to rotate the uploaded PDF") 
         uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_rotate")
         st.divider()
 
