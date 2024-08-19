@@ -159,7 +159,7 @@ with tab2:
 
 with tab3:
 
-    st.warning("This app allows you to extract text from the PDF") 
+    #st.warning("This app allows you to extract text from the PDF") 
     st.write("""
     The **Extract** tab is designed to extract text and metadata from PDF files. 
     You can upload a PDF, and the tool will pull out the text content for further analysis or editing.
@@ -193,7 +193,7 @@ with tab3:
 
 with tab4:
 
-        st.warning("This app allows you to merge more than two pdf files")  
+        #st.warning("This app allows you to merge more than two pdf files")  
         st.write("""
         The **Merge** tab lets you combine multiple PDF files into a single document. 
         Simply upload the PDFs you wish to merge, arrange them in the desired order, and merge them into one.
@@ -233,7 +233,7 @@ with tab4:
 
 with tab5:
 
-        st.warning("This app allows you to reduce/compress sizes of the PDF") 
+        #st.warning("This app allows you to reduce/compress sizes of the PDF") 
         st.write("""
         The **Compress** tab is used to reduce the file size of PDF documents. 
         This is useful when you need to share files with size restrictions or save storage space.
@@ -304,7 +304,7 @@ with tab5:
 
 with tab6:
 
-        st.warning("This app allows you to protect the PDF using given password") 
+        #st.warning("This app allows you to protect the PDF using given password") 
         st.write("""
         The **Protect** tab enables you to add password protection to your PDF files. 
         You can set a password to prevent unauthorized access or editing of your documents.
@@ -346,7 +346,7 @@ with tab6:
 
 with tab7:
 
-        st.warning("This app allows you to remove the password from the protected PDF") 
+        #st.warning("This app allows you to remove the password from the protected PDF") 
         st.write("""
         The **Unlock** tab allows you to remove password protection from PDF files. 
         If you have a secured PDF and you know the password, you can unlock it for easier access.
@@ -388,7 +388,7 @@ with tab7:
 
 with tab8:
 
-        st.warning("This app allows you to rotate the uploaded PDF") 
+        #st.warning("This app allows you to rotate the uploaded PDF") 
         st.write("""
         The **Rotate** tab lets you change the orientation of pages within a PDF file. 
         You can rotate individual pages or the entire document to correct their orientation.
