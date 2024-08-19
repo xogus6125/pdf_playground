@@ -25,8 +25,7 @@ st.markdown(
     <div class="footer">
         <p>
             Created by 
-            <a href="mailto:avijit.mba18@gmail.com" target="_blank">
-                <span class="icon">📧</span>Avijit Chakraborty
+                <span class="icon"></span>Avijit Chakraborty
             </a> |
             <a href="mailto:avijit.mba18@gmail.com" target="_blank">
                 <span class="icon">✉️</span>Email
