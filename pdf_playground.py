@@ -38,7 +38,7 @@ st.set_page_config(page_title="PDF Playground | v0.1",
 st.title(f""":rainbow[PDF Playground]""")
 st.markdown(
     '''
-    Created by | <a href="mailto:avijit.mba18@gmail.com">Avijit Chakraborty</a> |
+    Created by | <a href="mailto:avijit.mba18@gmail.com">Avijit Chakraborty</a> | :envelope: [Email](mailto:avijit.mba18@gmail.com) | :bust_in_silhouette: [LinkedIn](https://www.linkedin.com/in/avijit2403/) | :computer: [GitHub](https://github.com/DesolateTraveller) |
     for best view of the app, please **zoom-out** the browser to **75%**.
     ''',
     unsafe_allow_html=True)
@@ -499,16 +499,6 @@ with tab10:
     You can upload a PDF and convert it to a different format or vice versa.
     """)
     st.info('**Disclaimer : This portion is under Development**', icon="ℹ️")
-
-#---------------------------------------------------------------------------------------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------------------
-
-st.markdown("---")
-st.write("About the Author")
-
-st.markdown("#### Avijit Chakraborty")
-
-st.markdown(":envelope: [Email](mailto:avijit.mba18@gmail.com) | :bust_in_silhouette: [LinkedIn](https://www.linkedin.com/in/avijit2403/) | :computer: [GitHub](https://github.com/DesolateTraveller)")
 
 #---------------------------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------
