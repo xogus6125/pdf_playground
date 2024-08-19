@@ -106,7 +106,7 @@ def convert_pdf_to_images(pdf_bytes):
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
 
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9  = st.tabs(["**View**","**Extract**","**Merge**","**Compress**","**Protect**","**Unlock**","**Rotate**","**Resize**","**Convert**"])
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10  = st.tabs(["**Description**","**View**","**Extract**","**Merge**","**Compress**","**Protect**","**Unlock**","**Rotate**","**Resize**","**Convert**"])
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Content
@@ -116,7 +116,7 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9  = st.tabs(["**View**","**E
 ### Preview
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab1:
+with tab2:
 
         #st.warning("This app allows you to view the uploaded pdf file") 
         st.write("""
@@ -157,7 +157,7 @@ with tab1:
 ### Extract
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab2:
+with tab3:
 
     st.warning("This app allows you to extract text from the PDF") 
     uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf", key="file_uploader_extract")
@@ -187,7 +187,7 @@ with tab2:
 ### Merge
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab3:
+with tab4:
 
         st.warning("This app allows you to merge more than two pdf files")  
         uploaded_files = st.file_uploader("**Choose PDF files**", type="pdf", accept_multiple_files=True)
@@ -223,7 +223,7 @@ with tab3:
 ### Compress
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab4:
+with tab5:
 
         st.warning("This app allows you to reduce/compress sizes of the PDF")  
         uploaded_files = st.file_uploader("**Choose PDF file**", type="pdf", accept_multiple_files=True)
@@ -290,7 +290,7 @@ with tab4:
 ### Protect
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab5:
+with tab6:
 
         st.warning("This app allows you to protect the PDF using given password") 
         uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_protect")
@@ -328,7 +328,7 @@ with tab5:
 ### Unlock
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab6:
+with tab7:
 
         st.warning("This app allows you to remove the password from the protected PDF") 
         uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_unlock")
@@ -366,7 +366,7 @@ with tab6:
 ### Rotate
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab7:
+with tab8:
 
         st.warning("This app allows you to rotate the uploaded PDF") 
         uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_rotate")
@@ -398,14 +398,14 @@ with tab7:
 ### Resize
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab8:
+with tab9:
 
     st.info('**Disclaimer : This portion is under Development**', icon="ℹ️")
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Convert
 
-with tab9:
+with tab10:
 
     st.info('**Disclaimer : This portion is under Development**', icon="ℹ️")
 
