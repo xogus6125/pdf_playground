@@ -114,7 +114,7 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10  = st.tabs(["**Conte
 
 with tab1:
      
-    with st.container(height=900, border=True):
+    with st.container(height=1000, border=True):
 
         st.markdown("""
             <style>
@@ -156,15 +156,15 @@ with tab1:
             <h3>🛠️ App Capabilities</h3>
             <p>This app is designed to perform a variety of tasks including:</p>
             <ul>
-            <li><strong>View</strong> -         The **View** tab allows you to preview PDF files directly within the application.</li>
-            <li><strong>Extract</strong> -      The **Extract** tab is designed to extract text and metadata from PDF files.</li>
-            <li><strong>Merge</strong> -        The **Merge** tab lets you combine multiple PDF files into a single document.</li>
-            <li><strong>Compress</strong> -     The **Compress** tab is used to reduce the file size of PDF documents.</li>
-            <li><strong>Protect</strong> -      The **Protect** tab enables you to add password protection to your PDF files.</li>
-            <li><strong>Unlock</strong> -       The **Unlock** tab allows you to remove password protection from PDF files.</li>
-            <li><strong>Rotate</strong> -       The **Rotate** tab lets you change the orientation of pages within a PDF file.</li>
-            <li><strong>Resize</strong> -       The **Resize** tab allows you to adjust the dimensions of a PDF file. </li>    
-            <li><strong>Convert</strong> -      The **Convert** tab offers conversion options between PDF and other formats, such as Word or images.</li>                    
+            <li><strong>View</strong> -         It allows you to preview PDF files directly within the application.</li>
+            <li><strong>Extract</strong> -      It is designed to extract text and metadata from PDF files.</li>
+            <li><strong>Merge</strong> -        It lets you combine multiple PDF files into a single document.</li>
+            <li><strong>Compress</strong> -     It is used to reduce the file size of PDF documents.</li>
+            <li><strong>Protect</strong> -      It enables you to add password protection to your PDF files.</li>
+            <li><strong>Unlock</strong> -       It allows you to remove password protection from PDF files.</li>
+            <li><strong>Rotate</strong> -       It lets you change the orientation of pages within a PDF file.</li>
+            <li><strong>Resize</strong> -       It tab allows you to adjust the dimensions of a PDF file. </li>    
+            <li><strong>Convert</strong> -      It offers conversion options between PDF and other formats, such as word or images.</li>                    
             </ul>
             </div>
             """, unsafe_allow_html=True)
