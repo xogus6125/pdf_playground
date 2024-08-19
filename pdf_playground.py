@@ -114,7 +114,7 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10  = st.tabs(["**Conte
 
 with tab1:
      
-    with st.container(height=1000, border=True):
+    with st.container(height=900, border=True):
 
         st.markdown("""
             <style>
@@ -499,6 +499,16 @@ with tab10:
     You can upload a PDF and convert it to a different format or vice versa.
     """)
     st.info('**Disclaimer : This portion is under Development**', icon="ℹ️")
+
+#---------------------------------------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------
+
+st.markdown("---")
+st.write("About the Author")
+
+st.markdown("#### Avijit Chakraborty")
+
+st.markdown(":envelope: [Email](mailto:avijit.mba18@gmail.com) | :bust_in_silhouette: [LinkedIn](https://www.linkedin.com/in/avijit2403/) | :computer: [GitHub](https://github.com/DesolateTraveller)")
 
 #---------------------------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------
