@@ -118,7 +118,7 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9  = st.tabs(["**Preview**","
 
 with tab1:
 
-        st.markdown("This app allows you to view the uploaded pdf file", unsafe_allow_html=True) 
+        st.warning("This app allows you to view the uploaded pdf file") 
         uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_preview")
         st.divider()
 
