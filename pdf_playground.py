@@ -36,12 +36,12 @@ st.set_page_config(page_title="PDF Playground | v0.1",
                     initial_sidebar_state="collapsed")
 #----------------------------------------
 st.title(f""":rainbow[PDF Playground]""")
-#st.markdown(
-    #'''
-    #Created by | <a href="mailto:avijit.mba18@gmail.com">Avijit Chakraborty</a> ( :envelope: [Email](mailto:avijit.mba18@gmail.com) | :bust_in_silhouette: [LinkedIn](https://www.linkedin.com/in/avijit2403/) | :computer: [GitHub](https://github.com/DesolateTraveller) ) |
-    #for best view of the app, please **zoom-out** the browser to **75%**.
-    #''',
-    #unsafe_allow_html=True)
+st.markdown(
+    '''
+    Created by | <a href="mailto:avijit.mba18@gmail.com">Avijit Chakraborty</a> ( :envelope: [Email](mailto:avijit.mba18@gmail.com) | :bust_in_silhouette: [LinkedIn](https://www.linkedin.com/in/avijit2403/) | :computer: [GitHub](https://github.com/DesolateTraveller) ) |
+    for best view of the app, please **zoom-out** the browser to **75%**.
+    ''',
+    unsafe_allow_html=True)
 st.info('**An easy-to-use, open-source PDF application to preview and extract content and metadata from PDFs, add or remove passwords, modify, merge, convert and compress PDFs**', icon="ℹ️")
 #----------------------------------------
 
@@ -503,52 +503,61 @@ with tab10:
 #---------------------------------------------------------------------------------------------------------------------------------
 #---------------------------------------------------------------------------------------------------------------------------------
 
-st.sidebar.markdown(
-    """
-    <style>
-    .footer {
-        padding: 15px;
-        background-color: #f2f2f2;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin-top: 20px;
-        text-align: center;
-    }
-    .footer a {
-        text-decoration: none;
-        color: #0073e6;
-        font-weight: bold;
-    }
-    .footer a:hover {
-        color: #005bb5;
-    }
-    .footer .icon {
-        margin-right: 8px;
-    }
-    </style>
-    <div class="footer">
-        <p>
-            Created by 
-            <a href="https://share.streamlit.io/user/desolatetraveller" target="_blank">
-                <span class="icon"></span>Avijit Chakraborty
-            </a> |
-            <a href="mailto:avijit.mba18@gmail.com" target="_blank">
-                <span class="icon">✉️</span>Email
-            </a> |
-            <a href="https://www.linkedin.com/in/avijit2403/" target="_blank">
-                <span class="icon">👤</span>LinkedIn
-            </a> |
-            <a href="https://github.com/DesolateTraveller" target="_blank">
-                <span class="icon">💻</span>GitHub
-            </a>
-        </p>
-        <p style="margin-top: 10px; font-size: 14px;">
-            For the best view of the app, please <strong>zoom-out</strong> your browser to <strong>75%</strong>.
-        </p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+#---------------------------------------------------------------------------------------------------------------------------------
+#---------------------------------------------------------------------------------------------------------------------------------
 
-#---------------------------------------------------------------------------------------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------------------
+        st.markdown("This app allows you to resize the uploaded PDF", unsafe_allow_html=True) 
+        uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_resize")
+        st.divider()
+
+        if uploaded_file is not None:
+                
+                st.write(f"You have selected **{uploaded_file.name}** for resize. Please choose the scale factor and press **Resize/Rescale**.")
+                scale_factor = st.slider("**select scale factor**", 0.1, 2.0, 1.0, 0.1)
+
+                if st.button("**Resize/Rescale**"):    
+                    try:
+                        images = convert_from_bytes(uploaded_file.read())
+                        resized_images = [img.resize((int(img.width * scale_factor), int(img.height * scale_factor))) for img in images]
+                        resized_pdf = io.BytesIO()
+                        resized_images[0].save(resized_pdf, save_all=True, append_images=resized_images[1:], format="PDF")
+                        resized_pdf.seek(0)
+
+                        st.success("PDF resized or rescaled successfully!")
+                        st.download_button(label="**📥 Download Resized PDF", data=resized_pdf, file_name="resized_pdf.pdf", mime="application/pdf")
+                        
+                    except Exception as e:
+                        st.error(f"An error occurred: {e}")
+
+        else:
+            st.warning("Please upload a PDF file to resize or rescale.")
+
+
+        st.markdown("This app allows you to convert the uploaded PDF", unsafe_allow_html=True) 
+        uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_convert")
+        st.divider()
+
+        if uploaded_file is not None:
+                
+                st.write(f"You have selected **{uploaded_file.name}** for resize. Press **Convert** to transfer it to word file.")
+                
+                if st.button("**Convert**"):   
+
+                    pdf_file_path = f"temp_{uploaded_file.name}"
+                    word_file_path = f"{os.path.splitext(uploaded_file.name)[0]}.docx"
+                    
+                    with open(pdf_file_path, "wb") as f:
+                        f.write(uploaded_file.getbuffer())
+                    with st.spinner("Converting to Word..."):
+                        converter = Converter(pdf_file_path)
+                    converter.convert(word_file_path, start=0, end=None)
+                    converter.close()
+
+                    with open(word_file_path, "rb") as f:
+                        st.success("PDF converted to Word successfully!")
+                    st.download_button(label="**📥 Download Word File**", data=f, file_name=word_file_path, mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
+                    os.remove(pdf_file_path)
+                    os.remove(word_file_path)
+
+        else:
+            st.warning("Please upload a PDF file to convert.")
