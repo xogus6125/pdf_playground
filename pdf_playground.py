@@ -106,15 +106,16 @@ def convert_pdf_to_images(pdf_bytes):
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
 
-tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10  = st.tabs(["**Content**","**View**","**Extract**","**Merge**","**Compress**","**Protect**","**Unlock**","**Rotate**","**Resize**","**Convert**"])
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9  = st.tabs(["**View**","**Extract**","**Merge**","**Compress**","**Protect**","**Unlock**","**Rotate**","**Resize**","**Convert**"])
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Content
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab1:
+#with tab1:
      
-    with st.container(height=900, border=True):
+stats_expander = st.expander("**:blue[App Capabilities]**", expanded=True)
+with stats_expander:
 
         st.markdown("""
             <style>
@@ -173,7 +174,7 @@ with tab1:
 ### View
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab2:
+with tab1:
 
         #st.warning("This app allows you to view the uploaded pdf file") 
         st.write("""
@@ -214,7 +215,7 @@ with tab2:
 ### Extract
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab3:
+with tab2:
 
     #st.warning("This app allows you to extract text from the PDF") 
     st.write("""
@@ -248,7 +249,7 @@ with tab3:
 ### Merge
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab4:
+with tab3:
 
         #st.warning("This app allows you to merge more than two pdf files")  
         st.write("""
@@ -288,7 +289,7 @@ with tab4:
 ### Compress
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab5:
+with tab4:
 
         #st.warning("This app allows you to reduce/compress sizes of the PDF") 
         st.write("""
@@ -359,7 +360,7 @@ with tab5:
 ### Protect
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab6:
+with tab5:
 
         #st.warning("This app allows you to protect the PDF using given password") 
         st.write("""
@@ -401,7 +402,7 @@ with tab6:
 ### Unlock
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab7:
+with tab6:
 
         #st.warning("This app allows you to remove the password from the protected PDF") 
         st.write("""
@@ -443,7 +444,7 @@ with tab7:
 ### Rotate
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab8:
+with tab7:
 
         #st.warning("This app allows you to rotate the uploaded PDF") 
         st.write("""
@@ -480,7 +481,7 @@ with tab8:
 ### Resize
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab9:
+with tab8:
 
     st.write("""
     The **Resize** tab allows you to adjust the dimensions of a PDF file. 
@@ -492,7 +493,7 @@ with tab9:
 ### Convert
 #---------------------------------------------------------------------------------------------------------------------------------
 
-with tab10:
+with tab9:
 
     st.write("""
     The **Convert** tab offers conversion options between PDF and other formats, such as Word or images. 
