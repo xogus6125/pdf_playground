@@ -106,7 +106,7 @@ def convert_pdf_to_images(pdf_bytes):
 ### Main app
 #---------------------------------------------------------------------------------------------------------------------------------
 
-stats_expander = st.expander("**:blue[App Capabilities]**", expanded=True)
+stats_expander = st.expander("**:blue[App Capabilities]**", expanded=False)
 with stats_expander:
 
         st.markdown("""
