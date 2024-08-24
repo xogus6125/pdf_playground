@@ -20,7 +20,7 @@ from PIL import Image
 #----------------------------------------
 from io import BytesIO
 #----------------------------------------
-import fitz
+#import fitz
 import pikepdf
 from docx import Document
 from pdf2docx import Converter
