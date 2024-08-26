@@ -531,7 +531,7 @@ with tab9:
     if uploaded_file is not None:
 
         #st.write(f"You have selected **{uploaded_file.name}** for conversion.")
-        conversion_type = st.selectbox("Choose the output format", ("Word Document (.docx)", "Plain Text (.txt)"))
+        conversion_type = st.selectbox("**Choose the output format**", ("Word Document (.docx)", "Plain Text (.txt)"))
         if st.button("**Convert**"):
 
             pdf_file_path = f"temp_{uploaded_file.name}"
