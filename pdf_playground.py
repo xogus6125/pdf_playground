@@ -27,6 +27,7 @@ from pdf2docx import Converter
 from PyPDF2 import PdfMerger, PdfReader, PdfWriter
 from pdf2image import convert_from_path, convert_from_bytes
 from pdf2image.exceptions import PDFInfoNotInstalledError,PDFPageCountError,PDFSyntaxError
+from pdfminer.high_level import extract_text
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Title and description for your Streamlit app
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -524,33 +525,46 @@ with tab9:
     """)
     #st.info('**Disclaimer : This portion is under Development**', icon="ℹ️")
 
-    uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_convert")
+    uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf", key="file_uploader_convert")
     st.divider()
 
     if uploaded_file is not None:
-                
-                st.write(f"You have selected **{uploaded_file.name}** for resize. Press **Convert** to transfer it to word file.")
-                
-                if st.button("**Convert**"):   
 
-                    pdf_file_path = f"temp_{uploaded_file.name}"
-                    word_file_path = f"{os.path.splitext(uploaded_file.name)[0]}.docx"
-                    
-                    with open(pdf_file_path, "wb") as f:
-                        f.write(uploaded_file.getbuffer())
-                    with st.spinner("Converting to Word..."):
-                        converter = Converter(pdf_file_path)
+        #st.write(f"You have selected **{uploaded_file.name}** for conversion.")
+        conversion_type = st.selectbox("Choose the output format", ("Word Document (.docx)", "Plain Text (.txt)"))
+        if st.button("**Convert**"):
+
+            pdf_file_path = f"temp_{uploaded_file.name}"
+            output_file_name = os.path.splitext(uploaded_file.name)[0]
+            with open(pdf_file_path, "wb") as f:
+                f.write(uploaded_file.getbuffer())
+            if conversion_type == "Word Document (.docx)":
+                word_file_path = f"{output_file_name}.docx"
+                with st.spinner("Converting to Word..."):
+                    converter = Converter(pdf_file_path)
                     converter.convert(word_file_path, start=0, end=None)
                     converter.close()
 
-                    with open(word_file_path, "rb") as f:
-                        st.success("PDF converted to Word successfully!")
+                with open(word_file_path, "rb") as f:
+                    st.success("PDF converted to Word successfully!")
                     st.download_button(label="**📥 Download Word File**", data=f, file_name=word_file_path, mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
-                    os.remove(pdf_file_path)
-                    os.remove(word_file_path)
+            
+                os.remove(word_file_path)
+        
+            elif conversion_type == "Plain Text (.txt)":
+                text_file_path = f"{output_file_name}.txt"
+                with st.spinner("Converting to Text..."):
+                    text = extract_text(pdf_file_path)
+                    with open(text_file_path, "w") as f:
+                        f.write(text)
+
+                with open(text_file_path, "rb") as f:
+                    st.success("PDF converted to Text successfully!")
+                    st.download_button(label="**📥 Download Text File**", data=f, file_name=text_file_path, mime="text/plain")
+
+                os.remove(text_file_path)
+
+            os.remove(pdf_file_path)
 
     else:
         st.warning("Please upload a PDF file to convert.")
-
-#---------------------------------------------------------------------------------------------------------------------------------
-#---------------------------------------------------------------------------------------------------------------------------------
