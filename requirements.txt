@@ -7,7 +7,7 @@ seaborn
 #------------------------
 PyPDF2 
 pdf2image
-fitz
+#fitz
 PyMuPDF
 Pillow
 pikepdf
