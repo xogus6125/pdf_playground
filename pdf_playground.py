@@ -178,7 +178,7 @@ with tab1:
         #st.warning("This app allows you to view the uploaded pdf file") 
         st.write("""
         The **View** tab allows you to preview PDF files directly within the application. 
-        You can upload a PDF and view its content without needing any external software.
+        You can upload a PDF and view its content without any external software.
         """)
         uploaded_file = st.file_uploader("**Choose PDF file**", type="pdf",key="file_uploader_preview")
         st.divider()
