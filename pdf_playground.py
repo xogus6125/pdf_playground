@@ -37,15 +37,43 @@ st.set_page_config(page_title="PDF Playground | v0.1",
                     initial_sidebar_state="collapsed")
 #----------------------------------------
 st.title(f""":rainbow[PDF Playground]""")
-st.markdown(
-    '''
-    Created by | <a href="mailto:avijit.mba18@gmail.com">Avijit Chakraborty</a> ( 📑 [Resume](https://resume-avijitc.streamlit.app/) | :bust_in_silhouette: [LinkedIn](https://www.linkedin.com/in/avijit2403/) | :computer: [GitHub](https://github.com/DesolateTraveller) ) |
-    for best view of the app, please **zoom-out** the browser to **75%**.
-    ''',
-    unsafe_allow_html=True)
+#st.markdown(
+    #'''
+    #Created by | <a href="mailto:avijit.mba18@gmail.com">Avijit Chakraborty</a> ( 📑 [Resume](https://resume-avijitc.streamlit.app/) | :bust_in_silhouette: [LinkedIn](https://www.linkedin.com/in/avijit2403/) | :computer: [GitHub](https://github.com/DesolateTraveller) ) |
+    #for best view of the app, please **zoom-out** the browser to **75%**.
+    #''',
+    #unsafe_allow_html=True)
 st.info('**An easy-to-use, open-source PDF application to preview and extract content and metadata from PDFs, add or remove passwords, modify, merge, convert and compress PDFs**', icon="ℹ️")
 #----------------------------------------
+st.markdown(
+    """
+    <style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #f1f1f1;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        color: #333;
+        z-index: 100;
+    }
+    .footer p {
+        margin: 0;
+    }
+    .footer .highlight {
+        font-weight: bold;
+        color: blue;
+    }
+    </style>
 
+    <div class="footer">
+        <p>© 2024 | Developed by: <span class="highlight">E&PT - Digital Solutions</span> | Prepared by: <a href="mailto:avijit.chakraborty@clariant.com">Avijit Chakraborty</a></p> <span class="highlight">Thank you for visiting the app | This app is created for internal use, unauthorized uses or copying is strictly prohibited</span>
+    </div>
+    """,
+    unsafe_allow_html=True)
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Functions & Definitions
 #---------------------------------------------------------------------------------------------------------------------------------
@@ -175,7 +203,6 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9  = st.tabs(["**View**","**E
 
 with tab1:
 
-        #st.warning("This app allows you to view the uploaded pdf file") 
         st.write("""
         The **View** tab allows you to preview PDF files directly within the application. 
         You can upload a PDF and view its content without any external software.
@@ -216,7 +243,6 @@ with tab1:
 
 with tab2:
 
-    #st.warning("This app allows you to extract text from the PDF") 
     st.write("""
     The **Extract** tab is designed to extract text and metadata from PDF files. 
     You can upload a PDF, and the tool will pull out the text content for further analysis or editing.
@@ -250,7 +276,6 @@ with tab2:
 
 with tab3:
 
-        #st.warning("This app allows you to merge more than two pdf files")  
         st.write("""
         The **Merge** tab lets you combine multiple PDF files into a single document. 
         Simply upload the PDFs you wish to merge, arrange them in the desired order, and merge them into one.
@@ -290,7 +315,6 @@ with tab3:
 
 with tab4:
 
-        #st.warning("This app allows you to reduce/compress sizes of the PDF") 
         st.write("""
         The **Compress** tab is used to reduce the file size of PDF documents. 
         This is useful when you need to share files with size restrictions or save storage space.
@@ -361,7 +385,6 @@ with tab4:
 
 with tab5:
 
-        #st.warning("This app allows you to protect the PDF using given password") 
         st.write("""
         The **Protect** tab enables you to add password protection to your PDF files. 
         You can set a password to prevent unauthorized access or editing of your documents.
@@ -403,7 +426,6 @@ with tab5:
 
 with tab6:
 
-        #st.warning("This app allows you to remove the password from the protected PDF") 
         st.write("""
         The **Unlock** tab allows you to remove password protection from PDF files. 
         If you have a secured PDF and you know the password, you can unlock it for easier access.
@@ -445,7 +467,6 @@ with tab6:
 
 with tab7:
 
-        #st.warning("This app allows you to rotate the uploaded PDF") 
         st.write("""
         The **Rotate** tab lets you change the orientation of pages within a PDF file. 
         You can rotate individual pages or the entire document to correct their orientation.
