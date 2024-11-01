@@ -70,7 +70,7 @@ st.markdown(
     </style>
 
     <div class="footer">
-        <p>© 2024 | Developed by: <span class="highlight">E&PT - Digital Solutions</span> | Prepared by: <a href="mailto:avijit.chakraborty@clariant.com">Avijit Chakraborty</a></p> <span class="highlight">Thank you for visiting the app | This app is created for internal use, unauthorized uses or copying is strictly prohibited</span>
+        <p>© 2024 | Developed by: <span class="highlight">Avijit Chakraborty</span> | Contact : <a href="mailtoavijit.mba18@gmail.com">Avijit Chakraborty</a></p> <span class="highlight">Thank you for visiting the app | This app is created for internal use, unauthorized uses or copying is strictly prohibited</span>
     </div>
     """,
     unsafe_allow_html=True)
@@ -276,38 +276,38 @@ with tab2:
 
 with tab3:
 
-        st.write("""
-        The **Merge** tab lets you combine multiple PDF files into a single document. 
-        Simply upload the PDFs you wish to merge, arrange them in the desired order, and merge them into one.
-        """)
-        uploaded_files = st.file_uploader("**Choose PDF files**", type="pdf", accept_multiple_files=True)
-        st.divider()
+            st.write("""
+            The **Merge** tab lets you combine multiple PDF files into a single document. 
+            Simply upload the PDFs you wish to merge, arrange them in the desired order, and merge them into one.
+            """)
+            uploaded_files = st.file_uploader("**Choose PDF files**", type="pdf", accept_multiple_files=True)
+            st.divider()
 
-        if uploaded_files:
+            if uploaded_files:
 
-            col1, col2 = st.columns((0.2,0.8))
-            with col1:
-                
-                st.write(f"You have selected **{len(uploaded_files)} PDF file(s)** for merging.")
-                if st.button("**Merge PDFs**"):
-                    with st.spinner("Merging PDFs..."):
-                        merged_pdf = merge_pdfs(uploaded_files)
-                    st.success("PDFs merged successfully!")
+                col1, col2 = st.columns((0.2,0.8))
+                with col1:
+                    
+                    st.write(f"You have selected **{len(uploaded_files)} PDF file(s)** for merging.")
+                    if st.button("**Merge PDFs**"):
+                        with st.spinner("Merging PDFs..."):
+                            merged_pdf = merge_pdfs(uploaded_files)
+                        st.success("PDFs merged successfully!")
 
-                    st.download_button(label="**📥 Download Merged PDF**",data=merged_pdf,file_name="merged_pdf.pdf",mime="application/pdf")
+                        st.download_button(label="**📥 Download Merged PDF**",data=merged_pdf,file_name="merged_pdf.pdf",mime="application/pdf")
 
-                    with col2:
+                        with col2:
 
-                        #st.subheader("**View : Merged PDF**",divider='blue')    
-                        with st.container(height=650,border=True):
+                            #st.subheader("**View : Merged PDF**",divider='blue')    
+                            with st.container(height=650,border=True):
 
-                            merged_pdf.seek(0)
-                            images = pdf_to_images(merged_pdf)
-                            for page_num, img in enumerate(images):
-                                st.image(img, caption=f"Page {page_num + 1}", use_column_width=True)
+                                merged_pdf.seek(0)
+                                images = pdf_to_images(merged_pdf)
+                                for page_num, img in enumerate(images):
+                                    st.image(img, caption=f"Page {page_num + 1}", use_column_width=True)
 
-        else:
-                st.warning("Please upload PDF files to Merge.")
+            else:
+                    st.warning("Please upload PDF files to Merge.")
 
 #---------------------------------------------------------------------------------------------------------------------------------
 ### Compress
