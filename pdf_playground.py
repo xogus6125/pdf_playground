@@ -45,7 +45,7 @@ st.title(f""":rainbow[PDF Playground]""")
     #unsafe_allow_html=True)
 #st.info('**An easy-to-use, open-source PDF application to preview and extract content and metadata from PDFs, add or remove passwords, modify, merge, convert and compress PDFs**', icon="ℹ️")
 #----------------------------------------
-st.markdown(
+st.sidebar.markdown(
     """
     <style>
     .footer {
@@ -70,7 +70,7 @@ st.markdown(
     </style>
 
     <div class="footer">
-        <p>© 2024 | Developed by: <span class="highlight">Avijit Chakraborty</span> | Contact : <a href="mailtoavijit.mba18@gmail.com">Avijit Chakraborty</a></p> <span class="highlight">Thank you for visiting the app | This app is created for internal use, unauthorized uses or copying is strictly prohibited</span>
+        <p>© 2024 | Created by : <span class="highlight">Avijit Chakraborty</span> | Prepared by: <a href="mailto:avijit.mba18@gmail.com">Avijit Chakraborty</a></p> <span class="highlight">Thank you for visiting the app | Unauthorized uses or copying is strictly prohibited | For best view of the app, please zoom out the browser to 75%.</span>
     </div>
     """,
     unsafe_allow_html=True)
