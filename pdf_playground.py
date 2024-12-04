@@ -45,7 +45,7 @@ st.title(f""":rainbow[PDF Playground]""")
     #unsafe_allow_html=True)
 #st.info('**An easy-to-use, open-source PDF application to preview and extract content and metadata from PDFs, add or remove passwords, modify, merge, convert and compress PDFs**', icon="ℹ️")
 #----------------------------------------
-st.sidebar.markdown(
+st.markdown(
     """
     <style>
     .footer {
@@ -53,7 +53,7 @@ st.sidebar.markdown(
         left: 0;
         bottom: 0;
         width: 100%;
-        background-color: #f1f1f1;
+        background-color: #F0F2F6;
         text-align: center;
         padding: 10px;
         font-size: 14px;
